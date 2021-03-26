@@ -1,0 +1,113 @@
+create table ADDRESS
+(
+    id             int auto_increment
+        primary key,
+    person_id      int          null,
+    street_address varchar(100) null,
+    city_id        int          null,
+    province       varchar(50)  null,
+    postal_code    varchar(10)  null,
+    phone_number   int(8)       null,
+    email_address  varchar(100) null
+);
+
+create table ALERT_SYSTEM
+(
+    ALERT_ID        int auto_increment,
+    ALERT_DATE_TIME datetime default CURRENT_TIMESTAMP null,
+    ALERT_TYPE      varchar(55)                        null,
+    IS_ACTIVE       varchar(1)                         null,
+    REGION_ID       int                                null,
+    constraint ALERT_SYSTEM_pk
+        unique (ALERT_ID, REGION_ID)
+);
+
+create table CITY
+(
+    city_id   int auto_increment
+        primary key,
+    city_name varchar(100) null,
+    region_id int          null
+);
+
+create table DAILY_FOLLOW_UP
+(
+    PERSON_ID     int       null,
+    DATE_REPORTED date      null,
+    TIME_REPORTED timestamp null,
+    BODY_TEMP     int       null,
+    constraint DAILY_FOLLOW_UP_pk
+        unique (PERSON_ID, DATE_REPORTED, TIME_REPORTED)
+);
+
+create table FOLLOWUP_DETAILS
+(
+    PERSON_ID     int          null,
+    DATE_REPORTED date         null,
+    TIME_REPORTED timestamp    null,
+    SYMPTOMS      varchar(100) null,
+    constraint DAILY_FOLLOW_UP_pk
+        unique (PERSON_ID, DATE_REPORTED, TIME_REPORTED)
+);
+
+create table MESSAGES
+(
+    MSG_ID           int auto_increment,
+    PERSON_ID        int                                null,
+    DATETIME         datetime default CURRENT_TIMESTAMP null,
+    EMAIL            varchar(255)                       null,
+    OLD_ALERT_STATE  varchar(55)                        null,
+    NEW_ALERT_STATE  varchar(55)                        null,
+    MESSAGE_BODY     varchar(4000)                      null,
+    MESSAGE_CATEGORY varchar(55)                        null,
+    constraint MESSAGES_pk
+        unique (MSG_ID, PERSON_ID)
+);
+
+create table PUBLICHEALTHCENTER
+(
+    facility_id          varchar(40)  not null
+        primary key,
+    facility_name        varchar(100) null,
+    address              varchar(100) null,
+    web_address          varchar(100) null,
+    phone_number         int          null,
+    type                 varchar(100) null,
+    operating_zone       varchar(100) null,
+    method_of_acceptance varchar(100) null,
+    has_drive_through    varchar(1)   null
+);
+
+create table Person
+(
+    person_id         int auto_increment
+        primary key,
+    first_name        varchar(100)           null,
+    last_name         varchar(100)           null,
+    DOB               date                   null,
+    medicare_number   varchar(100)           null,
+    is_health_worker  varchar(1) default 'N' null,
+    related_person_no int                    null
+);
+
+create table REGION
+(
+    region_id            int auto_increment
+        primary key,
+    region_name          varchar(100) null,
+    current_active_alert varchar(55)  null
+);
+
+create table UI_QUERIES
+(
+    TABLE_NAME varchar(100)  null,
+    QUERY      varchar(4000) null
+);
+
+create table users
+(
+    username  varchar(40)  null,
+    email     varchar(100) null,
+    user_type varchar(10)  null,
+    password  varchar(100) null
+);
