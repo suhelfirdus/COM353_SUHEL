@@ -259,42 +259,51 @@ if(isset($_GET['person'])){
 
 function displayTable($table_name){
     global $db;
-    $table_name='PERSON';
+
     $query = "SELECT * FROM {$table_name}";
     
     $result = mysqli_query($db, $query);
-    $number_of_pk = count_num_pkeys($table_name);
-    echo $number_of_pk;
+    //$number_of_pk = count_num_pkeys($table_name);
+    //echo $number_of_pk;
 
     $fields_num = mysqli_field_count($db);
 
-    echo "<h1>Table: {$table_name}</h1>";
-    echo "<table border='1'>";
-
-    echo "<tr>";
-
-    // printing table headers
-    for($i=0; $i<$fields_num; $i++)
+    while(($row = $result->fetch_assoc()) !== null)
     {
-        $field = mysqli_fetch_field($result);
-        echo "<td>{$field->name}</td>";
+        $data[] = $row;
     }
+    $colNames = array_keys(reset($data));
 
-    echo "</tr>\n";
-
-    // printing table rows
-    while($row = mysqli_fetch_row($result))
+    echo "<table class=table>";
+    echo "<thead>";
+    foreach($colNames as $colName)
+    {
+        if ($colName != "pkey") {
+            if ($colName != "screenName") {
+                echo "<th>$colName</th>";
+            }
+        }
+    };
+    echo "</thead>";
+    foreach($data as $row)
     {
         echo "<tr>";
+        foreach($colNames as $colName) {
+            if ($colName != "pkey") {
+                if ($colName != "screenName") {
+                    echo "<td>" . $row[$colName] . "</td>";
+                }
 
-        // $row is array... foreach( .. ) puts every element
-        // of $row to $cell variable
-        foreach($row as $cell) {
-            echo "<td>$cell</td>";
+            }
         }
-        //echo "<td>".add_edit_and_delete()."</td>";
-        echo "</tr>\n";
+        echo "<td><a href=$row[screenName]_view.php?$row[pkey]>view</a>";
+
     }
+    echo "</tr>";
+
+
+
+
    
     mysqli_free_result($result);
 }
@@ -353,4 +362,17 @@ function getRegions(){
     return $regions;
        
  }
+function getBulkData($QueryToRun){
+    global $db;
+    $query = $QueryToRun;
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $screenData = array();
+    $row = mysqli_fetch_assoc($result);
+    //printf("%s (%s)\n", $row["first_name"], $row["last_name"]);
+    return $row;
+
+}
+
+
 ?>
