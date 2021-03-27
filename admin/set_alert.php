@@ -1,8 +1,10 @@
 <?php
 include('../functions.php') ?>
+<!--<?php include('admin_menu.php') ?> -->
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>New User Registration</title>
     <meta charset="UTF-8">
     <title>Signed-in Page</title>
@@ -38,17 +40,19 @@ include('../functions.php') ?>
     
 </head>
 <body>
-    <div class="jumbotron text-center">
+   <!-- <div class="jumbotron text-center">
         <h1>COVID-19 Tracking App Registration Page</h1>
         <p>new patients should register with their Medicare Card Number and Date of Birth</p>
-    </div>
-    <form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    </div> -->
+
+
+    <form class="col-12 col-md-9" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="alert alert-warning" role="alert">
             <?php echo display_error(); ?>
         </div>
 
         
-        <div class="form-group">
+        <centre><div class="form-group">
             <label class="control-label col-sm-2" for="user_type" >Region Name</label>
             <div class="col-sm-10">
                 <select name="region_names" id="region_names"  onchange="showRegion(this.value)" >
@@ -56,8 +60,9 @@ include('../functions.php') ?>
                     ?>
                 </select>
             </div>
+                <div id="txtHint"><b>Current Active alert will be shown here : </b></div>
         </div>
-        <div id="txtHint"><b>Current Active alert will be shown here : </b></div>
+
         
         <!--<div class="form-group">
             <label class="control-label col-sm-2" for="next_alert" >next Alert</label>
@@ -69,7 +74,7 @@ include('../functions.php') ?>
                 <button type="submit" class="btn" name="setAlert">Set Alert</button>
                 <button type="cancel" class="btn" name="CancelAlert">Cancel</button>
             </div>
-        </div>
-    </form>
+
+    </form></centre>
 </body>
 </html>

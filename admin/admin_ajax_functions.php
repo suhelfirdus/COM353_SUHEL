@@ -21,11 +21,8 @@ $sql="SELECT * FROM REGION WHERE region_name = '".$q."'";
 $result = mysqli_query($con,$sql);
 
 while($row = mysqli_fetch_array($result)) {
-
     echo "<div class=form-group><label class=control-label col-sm-2 for=current_alert >  Current Alert</label><div class=col-sm-10><input type=text name=current_alert id=current_alert readonly value=" . $row['current_active_alert'] ."></div></div>";
-
 }
-
 mysqli_close($con);
 ?>
 </body>
