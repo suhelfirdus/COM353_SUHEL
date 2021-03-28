@@ -84,15 +84,36 @@ $screenData=getBulkData($QueryToRun);
                             <label for="method_of_acceptance">
                                 Method of Acceptance
                             </label>
-                            <input type="text" class="form-control" id="method_of_acceptance" name="method_of_acceptance"  value="<?php echo $screenData['method_of_acceptance']?>"/>
+                        <select id="method_of_acceptance" name="method_of_acceptance" >
+                            <option value="All"<?=$screenData['method_of_acceptance'] == 'All' ? ' selected="selected"' : '';?>>All</option>
+                            <option value="Walk In"<?=$screenData['method_of_acceptance'] == 'Walk In' ? ' selected="selected"' : '';?>>Walk In</option>
+                            <option value="Appointment Only"<?=$screenData['method_of_acceptance'] == 'Appointment Only' ? ' selected="selected"' : '';?>>Appointment Only</option>
+                            <option value="Urgent Care"<?=$screenData['method_of_acceptance'] == 'Urgent Care' ? ' selected="selected"' : '';?>>Urgent Care</option>
+                        </select>
                         </div>
-
                         <div class="form-group">
+                            <label for="has_drive_through">
+                                Method of Acceptance
+                            </label>
+                            <select id="has_drive_through" name="has_drive_through" >
+                                <option value="X"<?=$screenData['has_drive_through'] == '' ? ' selected="selected"' : '';?>> </option>
+                                <option value="Y"<?=$screenData['has_drive_through'] == 'Y' ? ' selected="selected"' : '';?>>Yes</option>
+                                <option value="N"<?=$screenData['has_drive_through'] == 'N' ? ' selected="selected"' : '';?>>No</option>
+                            </select>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="method_of_acceptance">
+                                Method of Acceptance
+                            </label>
+                            <input type="text" class="form-control" id="method_of_acceptance" name="method_of_acceptance"  value="<?php echo $screenData['method_of_acceptance']?>"/>
+                        </div> -->
+
+                       <!-- <div class="form-group">
                             <label for="has_drive_through">
                                 Drive Through?
                             </label>
                             <input type="text" class="form-control" id="has_drive_through" name="has_drive_through"  value="<?php echo $screenData['has_drive_through']?>"/>
-                        </div>
+                        </div> -->
 
 
 
