@@ -273,20 +273,23 @@ function displayTable($table_name){
     global $db;
     $whereClause="1=1";
     $query = "SELECT * FROM {$table_name}";
-    
+
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);
 
-    while(($row = $result->fetch_assoc()) !== null)
-    {
+
+
+    while (($row = $result->fetch_assoc()) !== null) {
         $data[] = $row;
     }
-    $colNames = array_keys(reset($data));
+
+ if ( @$data!==null) {
+    @$colNames = array_keys(reset($data));
 
     echo "<table class=table>";
     echo "<thead>";
-    foreach($colNames as $colName)
-    {
+
+    foreach ($colNames as $colName) {
         if ($colName != "pkey") {
             if ($colName != "screenName") {
                 echo "<th>$colName</th>";
@@ -294,10 +297,9 @@ function displayTable($table_name){
         }
     };
     echo "</thead>";
-    foreach($data as $row)
-    {
+    foreach ($data as $row) {
         echo "<tr>";
-        foreach($colNames as $colName) {
+        foreach ($colNames as $colName) {
             if ($colName != "pkey") {
                 if ($colName != "screenName") {
                     echo "<td>" . $row[$colName] . "</td>";
@@ -305,20 +307,20 @@ function displayTable($table_name){
 
             }
         }
-        echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+        echo "<td><a href=" . @$row['screenName'] . "_view.php?" . @$row['pkey'] . ">view</a>";
 
-       /* try {
-            if(array_key_exists(@$row['screenName'],$row)){
-                echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
-            }
-        } catch (Exception $e) {
-            //echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }*/
+        /* try {
+             if(array_key_exists(@$row['screenName'],$row)){
+                 echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+             }
+         } catch (Exception $e) {
+             //echo 'Caught exception: ',  $e->getMessage(), "\n";
+         }*/
 
+
+        echo "</tr>";
     }
-    echo "</tr>";
-
-
+}
 
 
    

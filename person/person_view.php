@@ -24,7 +24,7 @@ $screenData=getBulkData($QueryToRun);
 
             <form role="form">
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary" name="add_newPerson_btn">
+                    <button type="submit" class="btn btn-primary" name="add_new_person">
                         add new person
                     </button>
 
@@ -51,7 +51,7 @@ $screenData=getBulkData($QueryToRun);
                         <label for="DOB">
                             Date of Birth
                         </label>
-                        <input type="test" class="form-control" id="DOB" value="<?php echo $screenData['dob']?>"/>
+                        <input type="date" class="form-control" id="DOB" value="<?php echo $screenData['dob']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="medicare_number">
@@ -73,10 +73,6 @@ $screenData=getBulkData($QueryToRun);
                         </label>
                         <input type="text" class="form-control" id="related_person_no" value="<?php echo $screenData['related_person_no']?>"/>
                     </div>
-
-
-
-
 
                     <button type="submit" class="btn btn-primary" name="update_newPerson_btn" >
                         Save Person
@@ -121,9 +117,23 @@ $screenData=getBulkData($QueryToRun);
 
 
             <div class="col-md-12">
+                <span class="badge badge-default">RELATED PERSONS</span>
                 <table class="table">
                     <?php
-                    echo "<b>Test History</b>";
+                    //echo "<b>Related Persons</b>";
+                    $table_name = "persons_view where related_person_no='$screenData[person_id]'";
+                    displayTable($table_name);
+                    ?>
+
+                </table>
+            </div>
+
+
+            <div class="col-md-12">
+                <span class="badge badge-default">TEST HISTORY</span>
+                <table class="table">
+                    <?php
+                    //echo "<b>Test History</b>";
                     $table_name = "diagnostic where person_id='$screenData[person_id]'";
                     displayTable($table_name);
                     ?>
@@ -133,9 +143,10 @@ $screenData=getBulkData($QueryToRun);
 
 
             <div class="col-md-12">
+                <span class="badge badge-default">MESSAGES HISTORY</span>
                 <table class="table">
                     <?php
-                    echo "<b>Message History</b>";
+                    //echo "<b>Message History</b>";
                     $table_name = "MESSAGES WHERE PERSON_ID='$screenData[person_id]'";
                     displayTable($table_name);
                     ?>
