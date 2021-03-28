@@ -305,7 +305,15 @@ function displayTable($table_name){
 
             }
         }
-        echo "<td><a href=$row[screenName]_view.php?$row[pkey]>view</a>";
+        echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+
+       /* try {
+            if(array_key_exists(@$row['screenName'],$row)){
+                echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+            }
+        } catch (Exception $e) {
+            //echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }*/
 
     }
     echo "</tr>";
@@ -371,28 +379,25 @@ function getRegions(){
     return $regions;
        
  }
-function getBulkData($QueryToRun){
-    global $db;
-    $query = $QueryToRun;
-    $result = mysqli_query($db, $query);
-    //$numRows=mysqli_num_rows($result);
-    $screenData = array();
-   // while ($row = $result->fetch_assoc()) {
-        //$screenData=$row;
-    //}
 
-    if (mysqli_num_rows($result) == 1) { // user found
-        $screenData = mysqli_fetch_assoc($result);
+    function getBulkData($QueryToRun)
+    {
+        global $db;
+        $query = $QueryToRun;
+        $result = mysqli_query($db, $query);
+        //$numRows=mysqli_num_rows($result);
+        $screenData = array();
+        // while ($row = $result->fetch_assoc()) {
+        //$screenData=$row;
+        //}
+
+        if (mysqli_num_rows($result) == 1) { // user found
+            $screenData = mysqli_fetch_assoc($result);
+        }
+        return $screenData;
     }
 
-
-    return $screenData;
-
-
-
-
-}
-
+/*
 function add_new_person()
 {
     global $host,$db_user,$db_pass,$db_name;
@@ -409,10 +414,9 @@ function add_new_person()
 					  VALUES($person_id)";
     $mysqli->query($query);
     return  $person_id;
-}
+}*/
 
 
 
 
 
-?>
