@@ -2,7 +2,9 @@
 include('../functions.php') ;
 include 'admin_header.php' ;
 $q = $_GET['person_id'];
+//echo $q;
 $QueryToRun="SELECT * FROM PERSON_DET_VIEW WHERE PERSON_ID=$q";
+//echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 ?>
 <!DOCTYPE html>
@@ -24,8 +26,6 @@ $screenData=getBulkData($QueryToRun);
 
 <form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
@@ -35,8 +35,13 @@ $screenData=getBulkData($QueryToRun);
 
         </div>
 
+
             <form role="form">
                 <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary" name="add_newPerson_btn">
+                        add new person
+                    </button>
+
                     <div class="form-group">
                         <label for="person_id">
                             Person No
@@ -87,10 +92,10 @@ $screenData=getBulkData($QueryToRun);
 
 
 
-                <button type="submit" class="btn btn-primary">
-                       Update Data
+                <button type="submit" class="btn btn-primary" name="update_newPerson_btn" >
+                       Save Person
                 </button>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" name="delete_newPerson_btn">
                         Delete Person
                     </button>
                 </div>

@@ -8,11 +8,23 @@ $db = mysqli_connect('localhost', 'root', '', 'main_projectv1');
 $username = "";
 $email    = "";
 $errors   = array();
-$person_id ="";
 
 // call the register() function if register_btn is clicked
 if (isset($_POST['register_btn'])) {
     register();
+}
+if (isset($_POST['add_newPerson_btn'])) {
+    echo "adding";
+    $person_id=add_new_person();
+    header("Location: person_view.php?person_id=$person_id");
+
+}
+
+if (isset($_POST['update_newPerson_btn'])) {
+    echo "updating";
+    //$person_id=add_new_person();
+    //header("Location: person_view.php?person_id=$person_id");
+
 }
 
 //call the cancelRegistration() function if cancel_btn is clicked
@@ -373,6 +385,25 @@ function getBulkData($QueryToRun){
     return $row;
 
 }
+
+function add_new_person()
+{
+    global $host,$db_user,$db_pass,$db_name;
+
+
+    $query = "INSERT INTO Person(person_id)
+					  VALUES(null)";
+    $mysqli = new mysqli('localhost', 'root', '', 'main_projectv1');
+
+    //$mysqli = new mysqli($host, $db_user, $db_pass, $db_name);
+    $mysqli->query($query);
+    $person_id=$mysqli->insert_id;
+    $query = "INSERT INTO Address(person_id)
+					  VALUES($person_id)";
+    $mysqli->query($query);
+    return  $person_id;
+}
+
 
 
 ?>
