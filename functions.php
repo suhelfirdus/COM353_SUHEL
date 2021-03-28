@@ -271,13 +271,10 @@ if(isset($_GET['person'])){
 
 function displayTable($table_name){
     global $db;
-
+    $whereClause="1=1";
     $query = "SELECT * FROM {$table_name}";
     
     $result = mysqli_query($db, $query);
-    //$number_of_pk = count_num_pkeys($table_name);
-    //echo $number_of_pk;
-
     $fields_num = mysqli_field_count($db);
 
     while(($row = $result->fetch_assoc()) !== null)
@@ -378,11 +375,21 @@ function getBulkData($QueryToRun){
     global $db;
     $query = $QueryToRun;
     $result = mysqli_query($db, $query);
-    $numRows=mysqli_num_rows($result);
+    //$numRows=mysqli_num_rows($result);
     $screenData = array();
-    $row = mysqli_fetch_assoc($result);
-    //printf("%s (%s)\n", $row["first_name"], $row["last_name"]);
-    return $row;
+   // while ($row = $result->fetch_assoc()) {
+        //$screenData=$row;
+    //}
+
+    if (mysqli_num_rows($result) == 1) { // user found
+        $screenData = mysqli_fetch_assoc($result);
+    }
+
+
+    return $screenData;
+
+
+
 
 }
 

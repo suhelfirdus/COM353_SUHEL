@@ -28,7 +28,7 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 
-
+<form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
@@ -37,6 +37,9 @@ if (isset($_GET['logout'])) {
             ?>
         </div>
         <div class="col-md-4">
+            <button type="submit" class="btn btn-primary" name="add_newPerson_btn">
+                add new person
+            </button>
             <?php
             $table_name = "persons_view";
             displayTable($table_name);

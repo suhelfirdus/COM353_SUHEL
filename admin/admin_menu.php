@@ -33,7 +33,7 @@
                         <span class="glyphicon glyphicon-log-out"></span>Zones Category</a>
                 </div>
                 <div style="padding: 10px">
-                    <a href="create_user.php" class="btn btn-outline-secondary" style="width: 175px">
+                    <a href="../regions/regions_record.php" class="btn btn-outline-secondary" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>Regions</a>
                 </div>
                 <div style="padding: 10px">
