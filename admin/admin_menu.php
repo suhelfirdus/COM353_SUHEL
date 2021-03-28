@@ -21,7 +21,7 @@
                         <span class="glyphicon glyphicon-log-out"></span>Person Records</a>
                 </div>
                 <div style="padding: 10px">
-                    <a href="health_centres_record.php" class="btn btn-outline-secondary" style="width: 175px">
+                    <a href="../healthcenter/healthcenter_record.php" class="btn btn-outline-secondary" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>Health Centers</a>
                 </div>
                 <div style="padding: 10px">
