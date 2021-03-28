@@ -134,8 +134,26 @@ $screenData=getBulkData($QueryToRun);
 
             </form>
 
+        <div class="row">
+            <div class="col-md-4">
+                <?php
+                //include 'admin_menu.php' ;
+                ?>
+
+            </div>
+        <div class="col-md-4">
+            <h3> Covid Test History</h3>
+            <?php
+            //$table_name = "diagnostic_view where person_id=".$screenData['person_id'];
+            $table_name = "diagnostic_view";
+            $whereClause="person_id=".$screenData['person_id'];
+            displayTable($table_name);
+            ?>
+        </div>
+
         <div class="col-md-4">
         </div>
+    </div>
     </div>
 </div>
 
