@@ -93,7 +93,7 @@ $screenData=getBulkData($QueryToRun);
                         </div>
                         <div class="form-group">
                             <label for="has_drive_through">
-                                Method of Acceptance
+                                Drive Through?
                             </label>
                             <select id="has_drive_through" name="has_drive_through" >
                                 <option value="X"<?=$screenData['has_drive_through'] == '' ? ' selected="selected"' : '';?>> </option>
@@ -101,25 +101,6 @@ $screenData=getBulkData($QueryToRun);
                                 <option value="N"<?=$screenData['has_drive_through'] == 'N' ? ' selected="selected"' : '';?>>No</option>
                             </select>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="method_of_acceptance">
-                                Method of Acceptance
-                            </label>
-                            <input type="text" class="form-control" id="method_of_acceptance" name="method_of_acceptance"  value="<?php echo $screenData['method_of_acceptance']?>"/>
-                        </div> -->
-
-                       <!-- <div class="form-group">
-                            <label for="has_drive_through">
-                                Drive Through?
-                            </label>
-                            <input type="text" class="form-control" id="has_drive_through" name="has_drive_through"  value="<?php echo $screenData['has_drive_through']?>"/>
-                        </div> -->
-
-
-
-
-
-
                     <button type="submit" class="btn btn-primary" name="update_Public_health_center" >
                         Save Public Health Center
                     </button>
