@@ -49,7 +49,7 @@ function update_facility($region_id)
     $method_of_acceptance=e($_POST['method_of_acceptance']);
     $has_drive_through=e($_POST['has_drive_through']);
 
-    $query = "UPDATE `PUBLICHEALTHCENTER` SET `facility_name` = '$facility_name', `address` = '$address' ,`web_address` = '$web_address' ,`phone_number` = '$phone_number' ,`type` = '$type' , `operating_zone` = '$operating_zone' ,  `method_of_acceptance` = '$method_of_acceptance' , `has_drive_through` = '$has_drive_through' WHERE `PUBLICHEALTHCENTER`.`facility_id` = '$facility_id'";
+    $query = "UPDATE `PUBLICHEALTHCENTER` SET `facility_name` = '$facility_name', `address` = '$address' ,`web_address` = '$web_address' ,`phone_number` = '$phone_number' ,`type` = '$type' , `operating_zone` = '$operating_zone' ,  `method_of_acceptance` = '$method_of_acceptance' , `has_drive_through` = '$has_drive_through'  WHERE `PUBLICHEALTHCENTER`.`facility_id` = '$facility_id'";
 
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
