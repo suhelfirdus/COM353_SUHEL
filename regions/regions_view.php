@@ -33,21 +33,21 @@ $screenData=getBulkData($QueryToRun);
                         <label for="region_id">
                             Region Id
                         </label>
-                        <input type="text" class="form-control" id="region_id"  name="region_id" value="<?php echo $screenData['region_id']?>" readonly/>
+                        <input type="text" class="form-control" id="region_id"  name="region_id" value="<?php echo $screenData['region_id']?>" readonly required/>
 
                     </div>
                     <div class="form-group">
                         <label for="region_name">
                             Region Name
                         </label>
-                        <input type="text" class="form-control" id="region_name" name="region_name" value="<?php echo $screenData['region_name']?>"/>
+                        <input type="text" class="form-control" id="region_name" name="region_name" value="<?php echo $screenData['region_name']?>" required/>
                     </div>
 
                     <div class="form-group">
                         <label for="current_active_alert">
                             Current Active Alert
                         </label>
-                        <input type="text" class="form-control" id="current_active_alert" name="current_active_alert"  value="<?php echo $screenData['current_active_alert']?>"/>
+                        <input type="text" class="form-control" id="current_active_alert" name="current_active_alert"  value="<?php echo $screenData['current_active_alert']?>" required/>
                     </div>
 
 
