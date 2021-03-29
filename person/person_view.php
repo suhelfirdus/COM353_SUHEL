@@ -8,9 +8,10 @@ $QueryToRun="SELECT * FROM person_det_view WHERE person_id='$q'";
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 ?>
+
 <body>
 
-<form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
 
     <div class="container-fluid">
         <div class="row">
@@ -21,9 +22,8 @@ $screenData=getBulkData($QueryToRun);
 
             </div>
 
-
-            <form role="form">
                 <div class="col-md-4">
+<form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <button type="submit" class="btn btn-primary" name="add_new_person">
                         add new person
                     </button>
@@ -32,52 +32,57 @@ $screenData=getBulkData($QueryToRun);
                         <label for="person_id">
                             Person No
                         </label>
-                        <input type="text" class="form-control" id="person_id"  value="<?php echo $screenData['person_id']?>" readonly/>
+                        <input type="text" class="form-control" id="person_id"  name="person_id"  value="<?php echo $screenData['person_id']?>" readonly/>
                     </div>
 
                     <div class="form-group">
                         <label for="first_name">
                             First Name
                         </label>
-                        <input type="text" class="form-control" id="first_name"  value="<?php echo $screenData['first_name']?>"/>
+                        <input type="text" class="form-control" id="first_name"  name ="first_name" value="<?php echo $screenData['first_name']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="last_name">
-                            Password
+                            Last Name
                         </label>
-                        <input type="text" class="form-control" id="last_name" value="<?php echo $screenData['last_name']?>"/>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $screenData['last_name']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="DOB">
                             Date of Birth
                         </label>
-                        <input type="date" class="form-control" id="DOB" value="<?php echo $screenData['dob']?>"/>
+                        <input type="date" class="form-control" id="DOB" name ="dob" value="<?php echo $screenData['dob']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="medicare_number">
                             Medicare Number
                         </label>
-                        <input type="text" class="form-control" id="medicare_number" value="<?php echo $screenData['medicare_number']?>"/>
+                        <input type="text" class="form-control" id="medicare_number" name ="medicare_number" value="<?php echo $screenData['medicare_number']?>"/>
                     </div>
 
                     <div class="form-group">
                         <label for="is_health_worker">
                             Health Worker??
                         </label>
-                        <input type="text" class="form-control" id="is_health_worker" value="<?php echo $screenData['is_health_worker']?>"/>
+                        <input type="text" class="form-control" id="is_health_worker" name ="is_health_worker" value="<?php echo $screenData['is_health_worker']?>"/>
                     </div>
+
 
                     <div class="form-group">
-                        <label for="related_person_no">
-                            Related Person No
-                        </label>
-                        <input type="text" class="form-control" id="related_person_no" value="<?php echo $screenData['related_person_no']?>"/>
-                    </div>
+                            <label for="related_person_no">
+                                Related Person No
+                            </label>
+                    <select name="related_person_no" id="related_person_no">
+                        <?php echo $allpersons=getRelatedPerson();
+                        ?>
+                    </select>
+                        </div>
 
-                    <button type="submit" class="btn btn-primary" name="update_newPerson_btn" >
+
+                    <button type="submit" class="btn btn-primary" name="update_person_btn" >
                         Save Person
                     </button>
-                    <button type="submit" class="btn btn-primary" name="delete_newPerson_btn">
+                    <button type="submit" class="btn btn-primary" name="delete_person">
                         Delete Person
                     </button>
                 </div>
@@ -90,29 +95,29 @@ $screenData=getBulkData($QueryToRun);
                         <label for="email_address">
                             Email address
                         </label>
-                        <input type="email" class="form-control" id="email_address" value="<?php echo $screenData['email_address']?>"/>
+                        <input type="email" class="form-control" id="email_address" name="email_address" value="<?php echo $screenData['email_address']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">
                             Phone Number
                         </label>
-                        <input type="text" class="form-control" id="phone_number" value="<?php echo $screenData['phone_number']?>"/>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $screenData['phone_number']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="street_address">
                             Street Address
                         </label>
-                        <input type="text" class="form-control" id="street_address" value="<?php echo $screenData['street_address']?>"/>
+                        <input type="text" class="form-control" id="street_address" name="street_address"  value="<?php echo $screenData['street_address']?>"/>
                     </div>
                     <div class="form-group">
                         <label for="province">
                             Province
                         </label>
-                        <input type="text" class="form-control" id="province" value="<?php echo $screenData['province']?>"/>
+                        <input type="text" class="form-control" id="province" name="province" value="<?php echo $screenData['province']?>"/>
                     </div>
                 </div>
 
-            </form>
+ </form>
 
 
 
@@ -155,6 +160,7 @@ $screenData=getBulkData($QueryToRun);
             </div>
 
     </div>
+
 
 </body>
 
