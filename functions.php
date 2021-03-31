@@ -379,8 +379,8 @@ function getRegions(){
     }
 
     return $regions;
-       
- }
+
+}
 
     function getBulkData($QueryToRun)
     {
