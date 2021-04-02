@@ -387,36 +387,14 @@ function getRegions(){
         global $db;
         $query = $QueryToRun;
         $result = mysqli_query($db, $query);
-        //$numRows=mysqli_num_rows($result);
         $screenData = array();
-        // while ($row = $result->fetch_assoc()) {
-        //$screenData=$row;
-        //}
-
         if (mysqli_num_rows($result) == 1) { // user found
             $screenData = mysqli_fetch_assoc($result);
         }
         return $screenData;
     }
 
-/*
-function add_new_person()
-{
-    global $host,$db_user,$db_pass,$db_name;
 
-
-    $query = "INSERT INTO Person(person_id)
-					  VALUES(null)";
-    $mysqli = new mysqli('localhost', 'root', '', 'main_projectv1');
-
-    //$mysqli = new mysqli($host, $db_user, $db_pass, $db_name);
-    $mysqli->query($query);
-    $person_id=$mysqli->insert_id;
-    $query = "INSERT INTO Address(person_id)
-					  VALUES($person_id)";
-    $mysqli->query($query);
-    return  $person_id;
-}*/
 
 
 

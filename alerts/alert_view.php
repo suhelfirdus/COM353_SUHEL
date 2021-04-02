@@ -40,7 +40,7 @@ $screenData=getBulkData($QueryToRun);
 
                 </div>
                 <button type="submit" class="btn btn-primary" name="set_new_alert_init">
-                    Set New Alert
+                    SEARCH
                 </button>
                 <!-- Button to call a new Operation  ends -->
 
@@ -64,7 +64,7 @@ $screenData=getBulkData($QueryToRun);
                         Current Active Alert
                     </label>
 
-                    <input type="text" class="form-control" id="current_active_alert"  name="current_active_alert" value="<?php echo (isset($screenData['alert_type'])) ? $screenData['alert_type'] : null?>" readonly required/>
+                    <input type="text" class="form-control" id="current_active_alert"  name="current_active_alert" value="<?php echo (isset($screenData['alert_desc'])) ? $screenData['alert_desc'] : null?>" readonly required/>
 
                 </div>
 
@@ -84,13 +84,13 @@ $screenData=getBulkData($QueryToRun);
 
                 </div>
 
-                <div class="form-group">
+              <!--  <div class="form-group">
                     <label for="change_alert_to">
                         Set a New Alert
                     </label>
                     <input type="text" class="form-control" id="change_alert_to"  name="change_alert_to" " />
 
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label for="notify_people">
@@ -99,6 +99,19 @@ $screenData=getBulkData($QueryToRun);
                     <select name="notify_people" id="notify_people">
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="change_alert_to">
+                        Select Next Alert
+                    </label>
+                    <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo (isset($screenData['region_id'])) ? $screenData['region_id'] : null ?>"/> -->
+
+                    <select name="change_alert_to" id="change_alert_to" >
+                        <?php echo getNextAlert($q);
+                        ?>
                     </select>
 
                 </div>
