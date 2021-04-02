@@ -89,8 +89,6 @@ $screenData=getBulkData($QueryToRun);
                 <!-- Second column-->
                 <div class="col-md-4">
 
-
-
                     <div class="form-group">
                         <label for="email_address">
                             Email address
@@ -109,6 +107,33 @@ $screenData=getBulkData($QueryToRun);
                         </label>
                         <input type="text" class="form-control" id="street_address" name="street_address"  value="<?php echo $screenData['street_address']?>"/>
                     </div>
+
+                    <div class="form-group">
+                        <label for="region_name">
+                            Select a Region
+                        </label>
+                        <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo $screenData['region_name']?>"/> -->
+
+                        <select name="region_name" id="region_name" >
+                            <?php echo $region=getRegions();
+                            ?>
+                        </select></div>
+
+                    <div class="form-group">
+                        <label for="city_name">
+                            City
+                        </label>
+                        <input type="text" class="form-control" id="city_name" name="city_name" value="<?php echo $screenData['province']?>"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postal_code">
+                            Postal Code
+                        </label>
+                        <input type="text" class="form-control" id="postal_code" name="postal_code" value="<?php echo $screenData['province']?>"/>
+                    </div>
+
+
                     <div class="form-group">
                         <label for="province">
                             Province

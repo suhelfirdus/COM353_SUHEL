@@ -88,7 +88,9 @@ function update_ui_person($person_id)
     $dob=e($_POST['dob']);
     $is_health_worker=e($_POST['is_health_worker']);
     $related_person_no=e($_POST['related_person_no']);
-    $query = "UPDATE `PERSON` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `Person`.`person_id` = '$person_id'";
+    $medicare_no=e($_POST['medicare_number']);
+
+    $query = "UPDATE `PERSON` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `Person`.`person_id` = $person_id";
     echo "one";
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
@@ -99,11 +101,23 @@ function update_ui_person($person_id)
     $phone_number = e($_POST['phone_number']);
     $street_address = e($_POST['street_address']);
     $province = e($_POST['province']);
-    $query = "UPDATE `ADDRESS` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `ADDRESS`.`person_id` = '$person_id'";
+    $region_name = e($_POST['region_name']);
+    $city_name = e($_POST['city_name']);
+
+    //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
+    $query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`province` = '$province'   WHERE `address`.`person_id` = $person_id";
+
+
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
+    }
+    $queryUpd ="update address set region_id=(select region_id from region where region_name='$region_name') where person_id=$person_id";
+    if ($mysqli->query($queryUpd) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $queryUpd->error;
     }
     $mysqli->close();
     return $person_id;
