@@ -40,6 +40,12 @@
                     <a href="create_user.php" class="btn btn-outline-secondary" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>PH Recommendations</a>
                 </div>
+
+                <div style="padding: 10px">
+                    <a href="../diagnosis/diagnosis_record.php" class="btn btn-outline-danger" style="width: 175px">
+                        <span class="glyphicon glyphicon-log-out"></span>Covid Testing</a>
+                </div>
+
                 <div style="padding: 10px">
                     <a href="../alerts/alert_record.php" class="btn btn-outline-danger" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>Set An Alert</a>
@@ -85,6 +91,8 @@
         </div>
     </div>
 </div> -->
+
+
    </body>
 </html>
 
