@@ -47,7 +47,7 @@ function set_new_alert_save()
 
 
     $query="UPDATE ALERT_SYSTEM SET IS_ACTIVE='$active' WHERE REGION_ID='$region_id'";
-    $queryInsert="INSERT INTO ALERT_SYSTEM(REGION_ID,ALERT_TYPE,IS_ACTIVE,NOTIFY_PEOPLE) VALUES($region_id,'$change_alert_to','$newStatus','$notify_people')";
+    $queryInsert="INSERT INTO ALERT_SYSTEM(REGION_ID,ALERT_LEVEL_ID,IS_ACTIVE,NOTIFY_PEOPLE) VALUES($region_id,'$change_alert_to','$newStatus','$notify_people')";
 
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
@@ -62,6 +62,22 @@ function set_new_alert_save()
     }
     $mysqli->close();
     return $region_name;
+
+}
+
+
+function getNextAlert($region_name){
+    global $db;
+    $query = "SELECT alert_level_id,alert_description from next_available_alert where region_name='$region_name'";
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $regions = array();
+    while ($row = $result->fetch_row()) {
+        echo  "<option value=$row[0]>$row[1]</option>";
+        $regions[]=$row;
+    }
+
+    return $regions;
 
 }
 ?>
