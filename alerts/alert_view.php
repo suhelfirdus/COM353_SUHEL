@@ -31,7 +31,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="region_name">
                         Select a Region
                     </label>
-                    <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo $screenData['region_name']?>"/> -->
+                    <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo (isset($screenData['region_id'])) ? $screenData['region_id'] : null ?>"/> -->
 
                     <select name="region_name" id="region_name" >
                         <?php echo $region=getRegions();
@@ -46,7 +46,7 @@ $screenData=getBulkData($QueryToRun);
 
                 <div class="form-group">
 
-                    <input type="hidden" class="form-control" id="region_id"  name="region_id" value="<?php echo $screenData['region_id']?>"/>
+                    <input type="hidden" class="form-control" id="region_id"  name="region_id" value="<?php echo (isset($screenData['region_id'])) ? $screenData['region_id'] : null ?>"/>
 
                 </div>
 
@@ -55,7 +55,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="region_name2">
                         Region Name
                     </label>
-                    <input type="text" class="form-control" id="region_name2"  name="region_name2" value="<?php echo $screenData['region_name']?>" readonly required/>
+                    <input type="text" class="form-control" id="region_name2"  name="region_name2" value="<?php echo (isset($screenData['region_name'])) ? $screenData['region_name'] : null ?>" readonly required/>
 
                 </div>
 
@@ -64,7 +64,7 @@ $screenData=getBulkData($QueryToRun);
                         Current Active Alert
                     </label>
 
-                    <input type="text" class="form-control" id="current_active_alert"  name="current_active_alert" value="<?php echo $screenData['alert_type']?>" readonly required/>
+                    <input type="text" class="form-control" id="current_active_alert"  name="current_active_alert" value="<?php echo (isset($screenData['alert_type'])) ? $screenData['alert_type'] : null?>" readonly required/>
 
                 </div>
 
@@ -72,7 +72,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="alert_date_time">
                         Current Active Alert Issued Date
                     </label>
-                    <input type="date" class="form-control" id="alert_date_time"  name="alert_date_time" value="<?php echo $screenData['alert_date_time']?>" readonly required/>
+                    <input type="text" class="form-control" id="alert_date_time"  name="alert_date_time" value="<?php echo (isset($screenData['alert_date_time'])) ? $screenData['alert_date_time'] : null?>" readonly required/>
 
                 </div>
 
@@ -80,7 +80,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="population">
                         Population in this Region
                     </label>
-                    <input type="text" class="form-control" id="population"  name="population"  readonly required/>
+                    <input type="text" class="form-control" id="population"  name="population"  value="<?php echo (isset($screenData['population'])) ? $screenData['population'] : null?>" readonly required/>
 
                 </div>
 
