@@ -6,14 +6,22 @@
 <body>
 
 <?php
+include('../config.php');
 $q = $_GET['q'];
-global $db;
-$sql="SELECT * FROM city WHERE region_id = '".$q."'";
-$result = mysqli_query($db, $sql);
-while($row = mysqli_fetch_array($result)) {
-    echo "<div class=form-group><label class=control-label col-sm-2 for=city_id >  Current Alert</label><div class=col-sm-10><input type=text name=city_id id=city_id readonly value=" . $row['city_id'] ."></div></div>";
-}
-//$mysqli->close();
+global $mysqli;
+$sql="select * from CITY where region_id=(select region_id from region where region_name='$q')";
+//echo $sql;
+$result = mysqli_query($mysqli, $sql);
+   echo "<label for=city_id>City .</label>";
+   echo "<select name='city_id' id='city_id' onselect='setValue(this.value)'>";
+   echo "<option value='0'> ---Select City-- </option>";
+        while($row = mysqli_fetch_array($result)) {
+        echo  "<option value=$row[0]>$row[0]  $row[1]</option>";
+        }
+   echo "</select>";
+
 ?>
 </body>
 </html>
+
+
