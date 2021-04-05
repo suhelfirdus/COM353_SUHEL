@@ -268,7 +268,7 @@ function update_ui_person($person_id)
     $city_id = e($_POST['city_code']);
     $postal_code = e($_POST['new_postal']);
     //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
-    $query = "UPDATE `address` SET     `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
+    $query = "UPDATE `address` SET  `city_id` = '$city_id' ,   `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
 
 
     if ($mysqli->query($query) === TRUE) {
