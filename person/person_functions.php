@@ -15,7 +15,7 @@ if (isset($_POST['update_person_btn'])) {
     $person_id = update_ui_person($person_id);
     $location ="/COM353/person/person_view.php?person_id=".$person_id;
     $location ="/COM353/person/person_view.php?person_id=".$person_id;
-    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
+    //header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 
 }
 
@@ -35,7 +35,7 @@ function add_person()
     $query = "INSERT INTO person(person_id)VALUES(null)";
     $mysqli->query($query);
     $person_id=$mysqli->insert_id;
-    $query = "INSERT INTO Address(person_id)VALUES('$person_id')";
+    $query = "INSERT INTO address(person_id)VALUES('$person_id')";
     $mysqli->query($query);
 
     $mysqli->close();
@@ -47,7 +47,7 @@ function delete_facility($facility_id)
 {
     global $mysqli;
     $facility_id = e($_POST['facility_id']);
-    $query ="DELETE FROM `PUBLICHEALTHCENTER` WHERE `facility_id` = '$facility_id'";
+    $query ="DELETE FROM `publichealthcenter` WHERE `facility_id` = '$facility_id'";
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
@@ -68,7 +68,7 @@ function generateRandomString($length = 10) {
 
 function getRelatedPerson(){
     global $db;
-    $query = "SELECT Person_id,first_name,Last_name,phone_number,street_address from person_det_view";
+    $query = "SELECT person_id,first_name,Last_name,phone_number,street_address from person_det_view";
     $result = mysqli_query($db, $query);
     $numRows=mysqli_num_rows($result);
     $regions = array();
@@ -80,51 +80,7 @@ function getRelatedPerson(){
     return $regions;
 
 }
-function update_ui_person($person_id)
-{
-    echo " suhel updating";
-    global $mysqli;
-    //$person_id = e($_POST['person_id']);
-    $first_name=e($_POST['first_name']);
-    $last_name=e($_POST['last_name']);
-    $dob=e($_POST['dob']);
-    $is_health_worker=e($_POST['is_health_worker']);
-    $related_person_no=e($_POST['related_person_no']);
-    $medicare_no=e($_POST['medicare_number']);
 
-    $query = "UPDATE `PERSON` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `Person`.`person_id` = $person_id";
-    echo "one";
-    if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $query->error;
-    }
-    $email_address = e($_POST['email_address']);
-    $phone_number = e($_POST['phone_number']);
-    $street_address = e($_POST['street_address']);
-    $province = e($_POST['province']);
-    $region_name = e($_POST['region_name']);
-    print_r($_POST);
-    $city_id = e($_POST['city_code']);
-    $postal_code = e($_POST['new_postal']);
-    //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
-    $query = "UPDATE `address` SET  `city_id` = $city_id, `postal_code` = '$postal_code',`email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address'  where `address`.`person_id` = $person_id";
-
-
-    if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $query->error;
-    }
-    $queryUpd ="update address set region_id=(select region_id from region where region_name='$region_name') where person_id=$person_id";
-    if ($mysqli->query($queryUpd) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $queryUpd->error;
-    }
-    $mysqli->close();
-    return $person_id;
-}
 
 
 

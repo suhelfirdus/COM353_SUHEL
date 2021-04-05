@@ -9,7 +9,7 @@
 include('../config.php');
 $q = $_GET['q'];
 global $mysqli;
-$sql="select * from CITY where region_id=(select region_id from region where region_name='$q')";
+$sql="select * from city where region_id=(select region_id from region where region_name='$q')";
 //echo $sql;
 $result = mysqli_query($mysqli, $sql);
    echo "<label for=city_id>City .</label>";

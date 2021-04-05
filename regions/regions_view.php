@@ -25,7 +25,7 @@ $screenData=getBulkData($QueryToRun);
                     <!-- Button to call a new Operation -->
                     <form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <button type="submit" class="btn btn-primary" name="add_new_Region">
-                        add new <?php echo $screenData['screenname'] ?>
+                        Add New Region
                     </button>
                     <!-- Button to call a new Operation  ends -->
 
@@ -42,20 +42,11 @@ $screenData=getBulkData($QueryToRun);
                         </label>
                         <input type="text" class="form-control" id="region_name" name="region_name" value="<?php echo $screenData['region_name']?>" required/>
                     </div>
-
-                    <div class="form-group">
-                        <label for="current_active_alert">
-                            Current Active Alert
-                        </label>
-                        <input type="text" class="form-control" id="current_active_alert" name="current_active_alert"  value="<?php echo $screenData['current_active_alert']?>" required/>
-                    </div>
-
-
                     <button type="submit" class="btn btn-primary" name="update_newRegion_btn" >
-                        Save <?php echo $screenData['screenname'] ?>
+                        Save Region
                     </button>
-                    <button type="submit" class="btn btn-primary" name="delete_newRegion_btn">
-                        Delete <?php echo $screenData['screenname'] ?>
+                    <button type="submit" class="btn btn-primary" name="delete_Region_btn">
+                        Delete Region
                     </button>
                 </div>
                 <!-- Second column-->

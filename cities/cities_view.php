@@ -10,7 +10,6 @@ $screenData=getBulkData($QueryToRun);
 <body>
 
 
-
 <!-- First Columns is always the menu -->
     <div class="container-fluid">
         <div class="row">
@@ -49,7 +48,7 @@ $screenData=getBulkData($QueryToRun);
                                 Region Name
                             </label>
                             <select name="region_name" id="region_name" >
-                                <option value='<?php echo $screenData['region_name']?>'><?php echo $screenData['region_name']?></option>
+                               <option value='<?php echo $screenData['region_name']?>'><?php echo $screenData['region_name']?></option>
                                 <option value="0"> -- Select Region -- </option>
                                 <?php echo $region=getRegions();
                                 ?>
@@ -60,7 +59,7 @@ $screenData=getBulkData($QueryToRun);
                             <label for="province_name">
                                 Province Name
                             </label>
-                            <select>
+                            <select name="province_name" id="province_name" >
                                 <option value='<?php echo $screenData['province']?>'><?php echo $screenData['province']?></option>
                                 <option value="0"> -- Select Province -- </option>
                                 <option value="AB">Alberta</option>
@@ -80,11 +79,11 @@ $screenData=getBulkData($QueryToRun);
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary" name="set_new_alert_save" >
+                        <button type="submit" class="btn btn-primary" name="save_city" >
                             Save
                         </button>
-                        <button type="submit" class="btn btn-primary" name="delete_newRegion_btn">
-                            Cancel
+                        <button type="submit" class="btn btn-primary" name="delete_city">
+                            Delete
                         </button>
 
 
@@ -102,6 +101,9 @@ $screenData=getBulkData($QueryToRun);
     </div>
 
 </body>
+<?php
+
+?>
 
 </html>
 

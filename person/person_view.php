@@ -14,7 +14,7 @@ $screenData=getBulkData($QueryToRun);
         //alert('hello');
         //alert(document.getElementById('city_id').value);
         document.getElementById('city_code').value=document.getElementById('city_id').value;
-        //alert('set');
+        alert('set');
     }
     function showCities(str) {
 
@@ -26,9 +26,8 @@ $screenData=getBulkData($QueryToRun);
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-
                     document.getElementById("txtHint").innerHTML = this.responseText;
-                    //alert(this.responseText);
+                    alert(this.responseText);
                 }
             };
 
@@ -163,7 +162,7 @@ $screenData=getBulkData($QueryToRun);
                             City
                         </label>
                         <select name="city_name" id="city_name">
-                            <?php echo  "<option value=$screenData[city_id]>$screenData[city_id]</option>"?>
+                      <?php echo  "<option value=$screenData[city_id]>$screenData[city_id]</option>"?>
                             <option value='0'> ---Select City-- </option>
                         </select>
                     </div>
@@ -227,7 +226,7 @@ $screenData=getBulkData($QueryToRun);
                 <table class="table">
                     <?php
                     //echo "<b>Message History</b>";
-                    $table_name = "MESSAGES WHERE PERSON_ID='$screenData[person_id]'";
+                    $table_name = "messages WHERE person_id='$screenData[person_id]'";
                     displayTable($table_name);
                     ?>
 
@@ -240,7 +239,52 @@ $screenData=getBulkData($QueryToRun);
 
 </body>
 <?php
+function update_ui_person($person_id)
+{
 
+    global $mysqli;
+    //$person_id = e($_POST['person_id']);
+    $first_name=e($_POST['first_name']);
+    $last_name=e($_POST['last_name']);
+    $dob=e($_POST['dob']);
+    $is_health_worker=e($_POST['is_health_worker']);
+    $related_person_no=e($_POST['related_person_no']);
+    $medicare_no=e($_POST['medicare_number']);
+
+    //$query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `person`.`person_id` = $person_id";
+    $query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob',`medicare_number` = '$medicare_no' ,`related_person_no` = $related_person_no WHERE `person`.`person_id` = $person_id";
+    if ($mysqli->query($query) === TRUE) {
+        echo "person updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+    echo"address update";
+    $email_address = e($_POST['email_address']);
+    $phone_number = e($_POST['phone_number']);
+    $street_address = e($_POST['street_address']);
+    $province = e($_POST['province']);
+    $region_name = e($_POST['region_name']);
+    print_r($_POST);
+    $city_id = e($_POST['city_code']);
+    $postal_code = e($_POST['new_postal']);
+    //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
+    $query = "UPDATE `address` SET   `CITY_ID` = $city_id,  `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
+
+
+    if ($mysqli->query($query) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+    $queryUpd ="update address set region_id=(select region_id from region where region_name='$region_name') where person_id=$person_id";
+    if ($mysqli->query($queryUpd) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $queryUpd->error;
+    }
+    $mysqli->close();
+    return $person_id;
+}
 ?>
 
 </html>
