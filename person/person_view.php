@@ -69,13 +69,13 @@ $screenData=getBulkData($QueryToRun);
                         <label for="first_name">
                             First Name
                         </label>
-                        <input type="text" class="form-control" id="first_name"  name ="first_name" value="<?php echo $screenData['first_name']?>"/>
+                        <input type="text" class="form-control" id="first_name"  name ="first_name" value="<?php echo $screenData['first_name']?>" required/>
                     </div>
                     <div class="form-group">
                         <label for="last_name">
                             Last Name
                         </label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $screenData['last_name']?>"/>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $screenData['last_name']?>" required/>
                     </div>
                     <div class="form-group">
                         <label for="DOB">
@@ -87,14 +87,14 @@ $screenData=getBulkData($QueryToRun);
                         <label for="medicare_number">
                             Medicare Number
                         </label>
-                        <input type="text" class="form-control" id="medicare_number" name ="medicare_number" value="<?php echo $screenData['medicare_number']?>"/>
+                        <input type="text" class="form-control" id="medicare_number" name ="medicare_number" value="<?php echo $screenData['medicare_number']?>"required/>
                     </div>
 
                     <div class="form-group">
                         <label for="is_health_worker">
                             Health Worker??
                         </label>
-                        <select name="is_health_worker" id="is_health_worker">
+                        <select name="is_health_worker" id="is_health_worker" required>
                             <option value=<?php echo $screenData['is_health_worker']?>><?php echo $screenData['is_health_worker']?></option>
                             <option value="Y">Yes</option>
                             <option value="N">No</option>
@@ -106,7 +106,7 @@ $screenData=getBulkData($QueryToRun);
                             <label for="related_person_no">
                                 Related Person No
                             </label>
-                    <select name="related_person_no" id="related_person_no">
+                    <select name="related_person_no" id="related_person_no" required>
                         <?php echo  "<option value=$screenData[related_person_no]>$screenData[related_person_no]</option>"?>
                         <?php echo $allpersons=getRelatedPerson();
                         ?>
@@ -129,28 +129,28 @@ $screenData=getBulkData($QueryToRun);
                         <label for="email_address">
                             Email address
                         </label>
-                        <input type="email" class="form-control" id="email_address" name="email_address" value="<?php echo $screenData['email_address']?>"/>
+                        <input type="email" class="form-control" id="email_address" name="email_address" value="<?php echo $screenData['email_address']?>" required/>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">
                             Phone Number
                         </label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $screenData['phone_number']?>"/>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $screenData['phone_number']?>" required/>
                     </div>
                     <div class="form-group">
                         <label for="street_address">
                             Street Address
                         </label>
-                        <input type="text" class="form-control" id="street_address" name="street_address"  value="<?php echo $screenData['street_address']?>"/>
+                        <input type="text" class="form-control" id="street_address" name="street_address"  value="<?php echo $screenData['street_address']?>" required/>
                     </div>
 
                     <div class="form-group">
                         <label for="region_name">
                             Select a Region
                         </label>
-                        <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo $screenData['region_name']?>"/> -->
+                        <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo $screenData['region_name']?>" /> -->
 
-                        <select name="region_name" id="region_name" onchange="showCities(this.value)" >
+                        <select name="region_name" id="region_name" onchange="showCities(this.value)" required>
                             <?php echo  "<option value=$screenData[region_name]>$screenData[region_name]</option>"?>
                             <?php echo $region=getRegions();
                             ?>
@@ -161,7 +161,7 @@ $screenData=getBulkData($QueryToRun);
                         <label for="city_id">
                             City
                         </label>
-                        <select name="city_name" id="city_name">
+                        <select name="city_name" id="city_name" required>
                       <?php echo  "<option value=$screenData[city_id]>$screenData[city_id]</option>"?>
                             <option value='0'> ---Select City-- </option>
                         </select>
@@ -170,7 +170,7 @@ $screenData=getBulkData($QueryToRun);
 
                     <div class="form-group">
 
-                        <input type="hidden" class="form-control" id="city_code" name="city_code" value="<?php echo $screenData['city_id']?>"/>
+                        <input type="hidden" class="form-control" id="city_code" name="city_code" value="<?php echo $screenData['city_id']?>" required/>
 
                     </div>
 
@@ -178,7 +178,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="new_postal">
                         Postal Code
                     </label>
-                        <input type="text" class="form-control" name ="new_postal" id="new_postal" value="<?php echo $screenData['postal_code']?>"/>
+                        <input type="text" class="form-control" name ="new_postal" id="new_postal" value="<?php echo $screenData['postal_code']?>" required/>
                    </div>
 
 
@@ -186,7 +186,7 @@ $screenData=getBulkData($QueryToRun);
                         <label for="province">
                             Province
                         </label>
-                        <input type="text" class="form-control" id="province" name="province" />
+                        <input type="text" class="form-control" id="province" name="province" required/>
                     </div>
                 </div>
 

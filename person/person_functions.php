@@ -15,13 +15,13 @@ if (isset($_POST['update_person_btn'])) {
     $person_id = update_ui_person($person_id);
     $location ="/COM353/person/person_view.php?person_id=".$person_id;
     $location ="/COM353/person/person_view.php?person_id=".$person_id;
-    //header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
+    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 
 }
 
 if (isset($_POST['delete_person'])) {
     $person_id = e($_POST['person_id']);
-    $person_id = delete_facility($person_id );
+    $person_id = delete_person($person_id);
     echo "delete";
     header("Location: person_record.php");
 
@@ -43,18 +43,18 @@ function add_person()
 }
 
 
-function delete_facility($facility_id)
+function delete_person($person_id)
 {
     global $mysqli;
-    $facility_id = e($_POST['facility_id']);
-    $query ="DELETE FROM `publichealthcenter` WHERE `facility_id` = '$facility_id'";
+    $facility_id = e($_POST['person_id']);
+    $query ="DELETE FROM `person` WHERE `person_id` = $person_id";
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
     $mysqli->close();
-    return $region_id;
+    //return $person_id;
 }
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
