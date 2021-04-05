@@ -14,7 +14,7 @@ $screenData=getBulkData($QueryToRun);
         //alert('hello');
         //alert(document.getElementById('city_id').value);
         document.getElementById('city_code').value=document.getElementById('city_id').value;
-        alert('set');
+        //alert('set');
     }
     function showCities(str) {
 
@@ -27,7 +27,7 @@ $screenData=getBulkData($QueryToRun);
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("txtHint").innerHTML = this.responseText;
-                    alert(this.responseText);
+                    //alert(this.responseText);
                 }
             };
 
@@ -81,7 +81,7 @@ $screenData=getBulkData($QueryToRun);
                         <label for="DOB">
                             Date of Birth
                         </label>
-                        <input type="date" class="form-control" id="DOB" name ="dob" value="<?php echo $screenData['dob']?>"/>
+                        <input type="date" class="form-control" id="dob" name ="dob" value="<?php echo $screenData['dob']?>" required/>
                     </div>
                     <div class="form-group">
                         <label for="medicare_number">
@@ -252,7 +252,7 @@ function update_ui_person($person_id)
     $medicare_no=e($_POST['medicare_number']);
 
     //$query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `person`.`person_id` = $person_id";
-    $query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob',`medicare_number` = '$medicare_no' ,`related_person_no` = $related_person_no WHERE `person`.`person_id` = $person_id";
+    $query = "UPDATE `person` SET `dob` = '$dob',`related_person_no` = '$related_person_no',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
     if ($mysqli->query($query) === TRUE) {
         echo "person updated successfully";
     } else {
@@ -268,7 +268,7 @@ function update_ui_person($person_id)
     $city_id = e($_POST['city_code']);
     $postal_code = e($_POST['new_postal']);
     //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
-    $query = "UPDATE `address` SET   `CITY_ID` = $city_id,  `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
+    $query = "UPDATE `address` SET     `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
 
 
     if ($mysqli->query($query) === TRUE) {
