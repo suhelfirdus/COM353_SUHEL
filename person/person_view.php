@@ -56,7 +56,7 @@ $screenData=getBulkData($QueryToRun);
                 <div class="col-md-4">
 <form class="form-horizontal" method="post" onsubmit="setValue()" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <button type="submit" class="btn btn-primary" name="add_new_person">
-                        add new person
+                        Add New person
                     </button>
 
                     <div class="form-group">
@@ -95,7 +95,11 @@ $screenData=getBulkData($QueryToRun);
                         <label for="is_health_worker">
                             Health Worker??
                         </label>
-                        <input type="text" class="form-control" id="is_health_worker" name ="is_health_worker" value="<?php echo $screenData['is_health_worker']?>"/>
+                        <select name="is_health_worker" id="is_health_worker">
+                            <option value=<?php echo $screenData['is_health_worker']?>><?php echo $screenData['is_health_worker']?></option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
                     </div>
 
 

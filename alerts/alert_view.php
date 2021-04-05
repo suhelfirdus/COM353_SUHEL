@@ -134,10 +134,10 @@ $screenData=getBulkData($QueryToRun);
                     </div> -->
 
 
-                <button type="submit" class="btn btn-primary" name="set_new_alert_save" >
+                <button type="submit" class="btn btn-primary" name="save_new_city" >
                     Save
                 </button>
-                <button type="submit" class="btn btn-primary" name="delete_newRegion_btn">
+                <button type="submit" class="btn btn-primary" name="delete_city">
                     Cancel
                 </button>
         </div>
