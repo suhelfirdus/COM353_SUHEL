@@ -292,7 +292,7 @@ function displayTable($table_name){
 
     foreach ($colNames as $colName) {
         if ($colName != "pkey") {
-            if ($colName != "screenName") {
+            if ($colName != "screenname") {
                 echo "<th>$colName</th>";
             }
         }
@@ -302,13 +302,13 @@ function displayTable($table_name){
         echo "<tr>";
         foreach ($colNames as $colName) {
             if ($colName != "pkey") {
-                if ($colName != "screenName") {
+                if ($colName != "screenname") {
                     echo "<td>" . $row[$colName] . "</td>";
                 }
 
             }
         }
-        echo "<td><a href=" . @$row['screenName'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+        echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
 
         /* try {
              if(array_key_exists(@$row['screenName'],$row)){
@@ -370,7 +370,7 @@ function count_num_pkeys($table_name){
 
 function getRegions(){
     global $db;
-    $query = "SELECT region_name,current_active_alert from region";
+    $query = "SELECT region_name from region";
     $result = mysqli_query($db, $query);
     $numRows=mysqli_num_rows($result);
     $regions = array();

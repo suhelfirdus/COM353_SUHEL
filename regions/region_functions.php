@@ -16,7 +16,7 @@ if (isset($_POST['update_newRegion_btn'])) {
     header("Location: regions_record.php");
 }
 
-if (isset($_POST['delete_newRegion_btn'])) {
+if (isset($_POST['delete_Region_btn'])) {
     $region_id=e($_POST['region_id']);
     $region_id = delete_region($region_id);
     echo "delete";
@@ -26,7 +26,7 @@ if (isset($_POST['delete_newRegion_btn'])) {
 function add_new_region()
 {
     global $mysqli;
-    $query = "INSERT INTO Region(region_id)VALUES(null)";
+    $query = "INSERT INTO region(region_id)VALUES(null)";
     $mysqli->query($query);
     $region_id=$mysqli->insert_id;
     $mysqli->close();
@@ -39,7 +39,7 @@ function update_region($region_id)
     $region_id = e($_POST['region_id']);
     $region_name = e($_POST['region_name']);
     $current_alert = e($_POST['current_active_alert']);
-    $query = "UPDATE `REGION` SET `region_name` = '$region_name', `current_active_alert` = '$current_alert' WHERE `REGION`.`region_id` = $region_id";
+    $query = "UPDATE `region` SET `region_name` = '$region_name'  WHERE `region`.`region_id` = $region_id";
 
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
@@ -53,7 +53,7 @@ function delete_region($region_id)
 {
     global $mysqli;
     $region_id = e($_POST['region_id']);
-    $query ="DELETE FROM `REGION` WHERE `region_id` = $region_id";
+    $query ="DELETE FROM `region` WHERE `region_id` = $region_id";
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {

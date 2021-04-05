@@ -9,38 +9,37 @@ if (isset($_POST['add_new_city'])) {
     header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 
 }
-if (isset($_POST['update_newRegion_btn'])) {
+if (isset($_POST['save_city'])) {
 
-    $region_id = e($_POST['region_id']);
-    $region_id = update_region($region_id);
-    header("Location: regions_record.php");
+    $city_id = e($_POST['city_id']);
+    $city_id= update_city($city_id);
+    header("Location: cities_record.php");
 }
 
-if (isset($_POST['delete_newRegion_btn'])) {
-    $region_id=e($_POST['region_id']);
-    $region_id = delete_region($region_id);
+if (isset($_POST['delete_city'])) {
+    $city_id=e($_POST['city_id']);
+    $region_id = delete_city($city_id);
     echo "delete";
-    header("Location: regions_record.php");
+    header("Location: cities_record.php");
 
 }
 function add_new_region()
 {
     global $mysqli;
-    $query = "INSERT INTO City(city_id)VALUES(null)";
+    $query = "INSERT INTO city(city_id)VALUES(null)";
     $mysqli->query($query);
     $region_id=$mysqli->insert_id;
     $mysqli->close();
     return  $region_id;
 }
 
-function update_region($region_id)
-{
-    global $mysqli;
-    $region_id = e($_POST['region_id']);
-    $region_name = e($_POST['region_name']);
-    $current_alert = e($_POST['current_active_alert']);
-    $query = "UPDATE `REGION` SET `region_name` = '$region_name', `current_active_alert` = '$current_alert' WHERE `REGION`.`region_id` = $region_id";
 
+function delete_city($city_id)
+{
+    print_r($_POST);
+    global $mysqli;
+    $region_id = e($_POST['city_id']);
+    $query ="DELETE FROM `city` WHERE `city_id` = $city_id";
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
@@ -49,18 +48,33 @@ function update_region($region_id)
     $mysqli->close();
     return $region_id;
 }
-function delete_region($region_id)
+
+function update_city($city_id)
 {
     global $mysqli;
-    $region_id = e($_POST['region_id']);
-    $query ="DELETE FROM `REGION` WHERE `region_id` = $region_id";
+    print_r($_POST);
+    $city_id = e($_POST['city_id']);
+    $city_name = e($_POST['city_name']);
+    $region_name = e($_POST['region_name']);
+    $province_name = e($_POST['province_name']);
+
+
+    $query = "UPDATE `city` SET `city_name` = '$city_name',`province`='$province_name' WHERE `city`.`city_id` = $city_id";
+
+    if ($mysqli->query($query) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+    $query = "UPDATE `city` SET `region_id` = (select region_id from region where region_name='$region_name') WHERE `city`.`city_id` = $city_id";
+
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
     $mysqli->close();
-    return $region_id;
+    return $city_id;
 }
 
 
