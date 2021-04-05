@@ -2,7 +2,8 @@
 session_start();
 
 // connect to database
-$db = mysqli_connect('localhost', 'root', '', 'main_projectv1');
+//$db = mysqli_connect('localhost', 'root', '', 'main_projectv1');
+$db = mysqli_connect('qfc353.encs.concordia.ca', 'qfc353_4', 'lmmm4444', 'qfc353_4');
 
 // variable declaration
 $username = "";

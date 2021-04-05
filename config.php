@@ -1,9 +1,9 @@
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "main_projectv1";
+$servername = "qfc353.encs.concordia.ca";
+$username = "qfc353_4";
+$password = "lmmm4444";
+$dbname = "qfc353_4";
 
 // Create connection
 $mysqli = new mysqli($servername, $username, $password, $dbname);
