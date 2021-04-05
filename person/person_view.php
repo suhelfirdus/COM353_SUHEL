@@ -8,7 +8,38 @@ $QueryToRun="SELECT * FROM person_det_view WHERE person_id='$q'";
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 ?>
+<head>
+<script>
+    function setValue() {
+        //alert('hello');
+        //alert(document.getElementById('city_id').value);
+        document.getElementById('city_code').value=document.getElementById('city_id').value;
+        //alert('set');
+    }
+    function showCities(str) {
 
+        //alert(str);
+       if (str == "") {
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                    //alert(this.responseText);
+                }
+            };
+
+            xmlhttp.open("GET","person_ajax.php?q="+str,true);
+            xmlhttp.send();
+        }
+    }
+
+
+</script>
+</head>
 <body>
 
 
@@ -23,7 +54,7 @@ $screenData=getBulkData($QueryToRun);
             </div>
 
                 <div class="col-md-4">
-<form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form class="form-horizontal" method="post" onsubmit="setValue()" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <button type="submit" class="btn btn-primary" name="add_new_person">
                         add new person
                     </button>
@@ -73,10 +104,11 @@ $screenData=getBulkData($QueryToRun);
                                 Related Person No
                             </label>
                     <select name="related_person_no" id="related_person_no">
+                        <?php echo  "<option value=$screenData[related_person_no]>$screenData[related_person_no]</option>"?>
                         <?php echo $allpersons=getRelatedPerson();
                         ?>
                     </select>
-                        </div>
+                    </div>
 
 
                     <button type="submit" class="btn btn-primary" name="update_person_btn" >
@@ -88,6 +120,7 @@ $screenData=getBulkData($QueryToRun);
                 </div>
                 <!-- Second column-->
                 <div class="col-md-4">
+
 
                     <div class="form-group">
                         <label for="email_address">
@@ -114,31 +147,43 @@ $screenData=getBulkData($QueryToRun);
                         </label>
                         <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo $screenData['region_name']?>"/> -->
 
-                        <select name="region_name" id="region_name" >
+                        <select name="region_name" id="region_name" onchange="showCities(this.value)" >
+                            <?php echo  "<option value=$screenData[region_name]>$screenData[region_name]</option>"?>
                             <?php echo $region=getRegions();
                             ?>
-                        </select></div>
+                        </select>
+                    </div>
 
-                    <div class="form-group">
-                        <label for="city_name">
+                    <div id="txtHint">
+                        <label for="city_id">
                             City
                         </label>
-                        <input type="text" class="form-control" id="city_name" name="city_name" value="<?php echo $screenData['province']?>"/>
+                        <select name="city_name" id="city_name">
+                            <?php echo  "<option value=$screenData[city_id]>$screenData[city_id]</option>"?>
+                            <option value='0'> ---Select City-- </option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <input type="hidden" class="form-control" id="city_code" name="city_code" value="<?php echo $screenData['city_id']?>"/>
+
                     </div>
 
                     <div class="form-group">
-                        <label for="postal_code">
-                            Postal Code
-                        </label>
-                        <input type="text" class="form-control" id="postal_code" name="postal_code" value="<?php echo $screenData['province']?>"/>
-                    </div>
+                    <label for="new_postal">
+                        Postal Code
+                    </label>
+                        <input type="text" class="form-control" name ="new_postal" id="new_postal" value="<?php echo $screenData['postal_code']?>"/>
+                   </div>
 
 
                     <div class="form-group">
                         <label for="province">
                             Province
                         </label>
-                        <input type="text" class="form-control" id="province" name="province" value="<?php echo $screenData['province']?>"/>
+                        <input type="text" class="form-control" id="province" name="province" />
                     </div>
                 </div>
 
@@ -149,6 +194,7 @@ $screenData=getBulkData($QueryToRun);
             <div class="col-md-12">
                 <span class="badge badge-default">RELATED PERSONS</span>
                 <table class="table">
+
                     <?php
                     //echo "<b>Related Persons</b>";
                     $table_name = "persons_view where related_person_no='$screenData[person_id]'";
@@ -184,10 +230,14 @@ $screenData=getBulkData($QueryToRun);
                 </table>
             </div>
 
+
     </div>
 
 
 </body>
+<?php
+
+?>
 
 </html>
 

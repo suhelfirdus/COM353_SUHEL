@@ -13,7 +13,10 @@ if (isset($_POST['update_person_btn'])) {
     $person_id = e($_POST['person_id']);
     echo $person_id;
     $person_id = update_ui_person($person_id);
-    header("Location: person_record.php");
+    $location ="/COM353/person/person_view.php?person_id=".$person_id;
+    $location ="/COM353/person/person_view.php?person_id=".$person_id;
+    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
+
 }
 
 if (isset($_POST['delete_person'])) {
@@ -77,7 +80,6 @@ function getRelatedPerson(){
     return $regions;
 
 }
-
 function update_ui_person($person_id)
 {
     echo " suhel updating";
@@ -102,10 +104,11 @@ function update_ui_person($person_id)
     $street_address = e($_POST['street_address']);
     $province = e($_POST['province']);
     $region_name = e($_POST['region_name']);
-    $city_name = e($_POST['city_name']);
-
+    print_r($_POST);
+    $city_id = e($_POST['city_code']);
+    $postal_code = e($_POST['new_postal']);
     //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
-    $query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`province` = '$province'   WHERE `address`.`person_id` = $person_id";
+    $query = "UPDATE `address` SET  `city_id` = $city_id, `postal_code` = '$postal_code',`email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address'  where `address`.`person_id` = $person_id";
 
 
     if ($mysqli->query($query) === TRUE) {
@@ -122,6 +125,10 @@ function update_ui_person($person_id)
     $mysqli->close();
     return $person_id;
 }
+
+
+
+
 
 
 

@@ -42,7 +42,7 @@
                 </div>
 
                 <div style="padding: 10px">
-                    <a href="../diagnosis/diagnosis_record.php" class="btn btn-outline-danger" style="width: 175px">
+                    <a href="../covidtest/covidtest_record.php" class="btn btn-outline-danger" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>Covid Testing</a>
                 </div>
 
