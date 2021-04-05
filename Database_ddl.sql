@@ -112,8 +112,8 @@ create trigger trg_notify_people
 	for each row
 	begin
 declare pid integer default 0;
-declare emailaddress varchar(100) default "";
-declare messagebody varchar(100) default "hi, you have a new email";
+declare emailaddress varchar(100) default '';
+declare messagebody varchar(100) default 'hi, you have a new email';
 declare finished integer default 0;
     declare cursor_allpeople cursor for (select a.person_id,a.email_address from person p, address a where p.person_id=a.person_id
 and a.region_id=new.region_id);
@@ -226,7 +226,6 @@ create or replace view diagnostic_det_view as
        `a`.`address_id`                                                  as `address_id`,
        `a`.`street_address`                                              as `street_address`,
        `a`.`email_address`                                               as `email_address`,
-       `a`.`province`                                                    as `province`,
        `a`.`postal_code`                                                 as `postal_code`,
        `a`.`phone_number`                                                as `person_phone_number`,
        `a`.`city_id`                                                     as `city_id`,
