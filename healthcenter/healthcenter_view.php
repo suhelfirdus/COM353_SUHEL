@@ -82,9 +82,9 @@ $screenData=getBulkData($QueryToRun);
                                 Type
                             </label>
                         <select name="type" id="type" name="type">
-                            <option value="H">Hospital</option>
-                            <option value="C">Clinic</option>
-                            <option value="S">Special Installment</option>
+                            <option value="Hospital">Hospital</option>
+                            <option value="Clinic">Clinic</option>
+                            <option value="Special Installment">Special Installment</option>
                         </select>
                         </div>
 
