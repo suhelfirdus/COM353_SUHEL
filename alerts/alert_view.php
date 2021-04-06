@@ -4,7 +4,7 @@ include 'alert_functions.php' ;
 $q = $_GET['region_name'];
 //echo $q;
 
-$QueryToRun="SELECT * FROM alerts_view WHERE REGION_NAME='$q'";
+$QueryToRun="SELECT * FROM alerts_view WHERE region_name='$q'";
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 
@@ -134,10 +134,10 @@ $screenData=getBulkData($QueryToRun);
                     </div> -->
 
 
-                <button type="submit" class="btn btn-primary" name="save_new_city" >
+                <button type="submit" class="btn btn-primary" name="set_new_alert_save" >
                     Save
                 </button>
-                <button type="submit" class="btn btn-primary" name="delete_city">
+                <button type="submit" class="btn btn-primary" name="delete_alert">
                     Cancel
                 </button>
         </div>
@@ -157,7 +157,46 @@ $screenData=getBulkData($QueryToRun);
     </div>
 
 </body>
+<?php
+function set_new_alert_save()
+{
 
+    echo "hello world";
+    global $mysqli;
+    $region_id = e($_POST['region_id']);
+    $region_name = e($_POST['region_name2']);
+    $current_alert = e($_POST['current_active_alert']);
+    $current_active_alert = e($_POST['current_active_alert']);
+    $change_alert_to = e($_POST['change_alert_to']);
+    $notify_people = e($_POST['notify_people']);
+    $active="N";
+    $newstatus="Y";
+
+    echo "$region_id ".$region_id;
+    echo "$region_name".$region_name;
+    echo "$change_alert_to" .$change_alert_to;
+    echo "$notify_people" .$notify_people;
+
+
+    $query="update alert_system set is_active='$active' where region_id='$region_id'";
+    $queryinsert="insert into alert_system(region_id,alert_level_id,is_active,notify_people) values($region_id,'$change_alert_to','$newstatus','$notify_people')";
+    echo  $queryinsert;
+    if ($mysqli->query($query) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+
+    if ($mysqli->query($queryinsert) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+    $mysqli->close();
+    return $region_name;
+
+}
+?>
 
 </html>
 
