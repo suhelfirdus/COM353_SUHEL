@@ -375,7 +375,22 @@ function getRegions(){
     $numRows=mysqli_num_rows($result);
     $regions = array();
     while ($row = $result->fetch_row()) {
-        echo  "<option value=$row[0]>$row[0]</option>";
+        echo  "<option value='$row[0]'>$row[0]</option>";
+        $regions[]=$row;
+    }
+
+    return $regions;
+
+}
+
+function getHealthFacilities(){
+    global $db;
+    $query = "select facility_id,facility_name from publichealthcenter";
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $regions = array();
+    while ($row = $result->fetch_row()) {
+        echo  "<option value='$row[0]'>$row[0] - $row[1] </option>";
         $regions[]=$row;
     }
 

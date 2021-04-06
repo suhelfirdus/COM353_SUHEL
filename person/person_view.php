@@ -9,6 +9,19 @@ $QueryToRun="SELECT * FROM person_det_view WHERE person_id='$q'";
 $screenData=getBulkData($QueryToRun);
 ?>
 <head>
+    <script>
+        function enableHealthFacilty() {
+
+            if(document.getElementById('is_health_worker').value=="Y"){
+                document.getElementById('health_facility').disabled=false;
+            }
+            if(document.getElementById('is_health_worker').value=="N"){
+                document.getElementById('health_facility').disabled=true;
+            }
+        }
+
+
+    </script>
 <script>
     function setValue() {
         //alert('hello');
@@ -94,12 +107,31 @@ $screenData=getBulkData($QueryToRun);
                         <label for="is_health_worker">
                             Health Worker??
                         </label>
-                        <select name="is_health_worker" id="is_health_worker" required>
+                        <select name="is_health_worker" id="is_health_worker" required onchange="enableHealthFacilty()">
                             <option value=<?php echo $screenData['is_health_worker']?>><?php echo $screenData['is_health_worker']?></option>
                             <option value="Y">Yes</option>
                             <option value="N">No</option>
                         </select>
                     </div>
+                    <!--<div class="form-group">
+                        <label for="health_facility">
+                            Health Facilty
+                        </label>
+                        <input type="text" class="form-control" id="health_facility" name ="health_facility" value="<?php echo @$screenData['health_facility']?>" disabled/>
+                    </div> -->
+
+    <div class="form-group">
+        <label for="health_facility">
+            Health Facility
+        </label>
+
+        <select name="health_facility" id="health_facility" disabled>
+            <?php echo  "<option value=$screenData[health_facility]>$screenData[health_facility]</option>"?>
+            <?php echo $region=getHealthFacilities();
+            ?>
+        </select>
+    </div>
+
 
 
                     <div class="form-group">
@@ -250,9 +282,11 @@ function update_ui_person($person_id)
     $is_health_worker=e($_POST['is_health_worker']);
     $related_person_no=e($_POST['related_person_no']);
     $medicare_no=e($_POST['medicare_number']);
+    $health_facility_id=e($_POST['health_facility']);
 
     //$query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `person`.`person_id` = $person_id";
-    $query = "UPDATE `person` SET `dob` = '$dob',`related_person_no` = '$related_person_no',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
+    $query = "UPDATE `person` SET `health_facility_id`='$health_facility_id', `dob` = '$dob',`related_person_no` = '$related_person_no',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
+   echo  $query;
     if ($mysqli->query($query) === TRUE) {
         echo "person updated successfully";
     } else {
