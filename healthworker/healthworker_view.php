@@ -25,7 +25,7 @@ $screenData=getBulkData($QueryToRun);
                     <label for="schedule_date">
                         <strong>Choose Schedule Date</strong>
                     </label>
-                    <input type="date" name="schedule_date" class="form-control" id="schedule_date" placeholder="dd-mm-yyyy">
+                    <input type="text" name="schedule_date" class="form-control" id="schedule_date" placeholder="dd-mm-yyyy">
                 </div>
                 <div class="form-group">
                     <label for="facility_name">
