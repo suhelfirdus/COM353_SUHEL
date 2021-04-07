@@ -68,28 +68,7 @@ function delete_schedule($person_id, $facility_id, $schedule_date)
     return $person_id;
 }
 
-function create_new_schedule($person_id, $facility_name, $schedule_date)
-{
-    echo "inside create";
-    global $mysqli;
-    echo $facility_name;
 
-    $query = "SELECT facility_id FROM publichealthcenter WHERE facility_name = '$facility_name'";
-    $result = mysqli_query($mysqli, $query);
-    if($result == false) {
-        die("Error");
-    }
-    $result = $result->fetch_assoc();
-    $facility_id = $result['facility_id'];
-
-
-    $query = "INSERT INTO `work_schedule` (`person_id`, `facility_id`, `schedule_date`) 
-                            VALUES ('$person_id', '$facility_id', '$schedule_date')";
-    $mysqli->query($query);
-    $mysqli->close();
-
-    return$person_id;
-}
 
 
 function displaySchedules($table_name, $id){
@@ -242,4 +221,30 @@ function getPublicHealthCenters(){
     //$mysqli->close();
 
     return  $public_health_centers;
+}
+
+function create_new_schedule($person_id, $facility_name, $schedule_date)
+{
+    echo "inside create";
+    global $mysqli;
+    echo $facility_name;
+
+    $query = "SELECT facility_id FROM publichealthcenter WHERE facility_name = '$facility_name'";
+    echo  $query;
+    $result = mysqli_query($mysqli, $query);
+    if($result == false) {
+        die("Error");
+    }
+    $result = $result->fetch_assoc();
+    $facility_id = $result['facility_id'];
+
+
+    $query = "INSERT INTO `work_schedule` (`person_id`, `facility_id`, `schedule_date`) 
+                            VALUES ('$person_id', '$facility_id', '$schedule_date')";
+
+    echo  $query;
+    $mysqli->query($query);
+    $mysqli->close();
+
+    return$person_id;
 }
