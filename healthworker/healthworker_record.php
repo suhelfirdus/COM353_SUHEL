@@ -39,10 +39,5 @@ include '../UICommon/template.php' ;
 </div>
 
 
-
-</body>
-</html>
-
-
 </body>
 </html>
