@@ -67,6 +67,30 @@ function delete_schedule($person_id, $facility_id, $schedule_date)
     $mysqli->close();
     return $person_id;
 }
+/*
+function create_new_schedule($person_id, $facility_name, $schedule_date)
+{
+    echo "inside create";
+    global $mysqli;
+    echo $facility_name;
+
+    $query = "SELECT facility_id FROM publichealthcenter WHERE facility_name = '$facility_name'";
+    $result = mysqli_query($mysqli, $query);
+    if($result == false) {
+        die("Error");
+    }
+    $result = $result->fetch_assoc();
+    $facility_id = $result['facility_id'];
+
+    $schedule_start = e($_POST['schedule_start_time']);
+    $schedule_end = e($_POST['schedule_end_time']);
+
+    $query = "INSERT INTO `work_schedule` (`person_id`, `facility_id`, `schedule_date`, `schedule_start`, `schedule_end`) 
+                            VALUES ('$person_id', '$facility_id', '$schedule_date', '$schedule_start', '$schedule_end')";
+    $mysqli->query($query);
+    $mysqli->close();
+    return $person_id;
+}*/
 
 function create_new_schedule($person_id, $facility_name, $schedule_date)
 {
