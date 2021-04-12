@@ -14,7 +14,7 @@ $screenData=getBulkData($QueryToRun);
     <div class="row">
         <div class="col-md-4">
             <?php
-            include '../admin/admin_menu.php' ;
+            include '../admin/admin_menu.php';
             ?>
         </div>
         <!-- First Columns is always the menu ends-->
@@ -23,7 +23,7 @@ $screenData=getBulkData($QueryToRun);
             <!-- Button to call a new Operation -->
 
             <form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                <button type="submit" class="btn btn-primary" name="add_new_covidtest">
+                <button type="submit" class="btn btn-primary" name="ADD_NEW_COVIDTEST">
                     Add New Test
                 </button>
                 <!-- Button to call a new Operation  ends -->
@@ -93,7 +93,7 @@ $screenData=getBulkData($QueryToRun);
                     </label>
 
                     <select id="test_result" name="test_result" value="<?php echo (isset($screenData['test_result'])) ? $screenData['test_result'] : null ?>" />
-                    <option value="Not Avl">Result Not Available Yet</option>
+                    <option value="NA">Result Not Available Yet</option>
                     <option value="Positive">Positive</option>
                     <option value="Negative">Negative</option>
 
@@ -121,7 +121,37 @@ $screenData=getBulkData($QueryToRun);
 
 
 </body>
+<?php
+function update_ui_covidtest($test_id)
+{
 
+    global $mysqli;
+    //$person_id = e($_POST['person_id']);
+    $person_id=e($_POST['person_id']);
+    $test_date=e($_POST['test_date']);
+    $test_center=e($_POST['test_center']);
+    $tested_by=e($_POST['tested_by']);
+    //$result_date=e($_POST['result_date']);
+    echo "before";
+    $result_date=(isset($_POST['result_date'])) ? $_POST['result_date'] : '0000-00-00';
+    if ($_POST['result_date']==''){
+        $result_date='0000-00-00';
+
+    }
+    $test_result=e($_POST['test_result']);
+
+    $query = "UPDATE `diagnostic` SET `result_date`='$result_date' ,`person_id` = $person_id,`tested_by` =$tested_by,`performed_at`= '$test_center', `test_date` = '$test_date' ,`result` = '$test_result' WHERE `diagnostic`.`test_id` = $test_id";
+    //$query = "UPDATE `Diagnostic` SET `person_id` = $person_id ,`test_date` = '$test_date',test_center` = '$test_center' WHERE `DIAGNOSTICS `.`test_id`=$test_id";
+    echo  $query;
+    if ($mysqli->query($query) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+
+    return $test_id;
+}
+?>
 
 </html>
 

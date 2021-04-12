@@ -8,7 +8,7 @@ include '../UICommon/template.php' ;
     <div class="row">
         <div class="col-md-4">
             <?php
-            include '../admin/admin_menu.php' ;
+            include '../admin/admin_menu.php';
             ?>
         </div>
         <div id="list_workers_by_facility" class="col-md-4">

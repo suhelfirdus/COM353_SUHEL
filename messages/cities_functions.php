@@ -2,24 +2,6 @@
 
 include('../config.php');
 
-if (isset($_POST['SAVE_POSTAL'])) {
-    //echo "hello here";
-    global $mysqli;
-    //print_r($_POST);
-
-    $city_id = e($_POST['city_id']);
-    $zip_code = e($_POST['zip_code']);
-    $_SESSION["city_id"]=$city_id;
-    $query = "INSERT INTO cityzipcodes(city_id,postal_code)VALUES($city_id,'$zip_code')";
-    if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $query->error;
-    }
-    $mysqli->close();
-}
-
-
 if (isset($_POST['add_new_city'])) {
     $city_id=add_new_region();
     echo "hello world".$city_id;

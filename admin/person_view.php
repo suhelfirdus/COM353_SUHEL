@@ -30,7 +30,7 @@ $screenData=getBulkData($QueryToRun);
     <div class="row">
         <div class="col-md-4">
             <?php
-            include 'admin_menu.php' ;
+            include 'admin_menu2.php';
             ?>
 
         </div>
@@ -137,7 +137,7 @@ $screenData=getBulkData($QueryToRun);
         <div class="row">
             <div class="col-md-4">
                 <?php
-                //include 'admin_menu.php' ;
+                //include 'admin_menu2.php' ;
                 ?>
 
             </div>

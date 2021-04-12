@@ -1,8 +1,7 @@
 <?php
 include '../UICommon/template.php' ;
 include 'cities_functions.php' ;
-//$q = $_GET['city_id'];
-$q =(isset($_GET['city_id'])) ? $_GET['city_id'] : $_SESSION["city_id"];
+$q = $_GET['city_id'];
 //echo $q;
 $QueryToRun="SELECT * FROM cities_det_view WHERE city_id=$q";
 //echo $QueryToRun;
@@ -86,70 +85,16 @@ $screenData=getBulkData($QueryToRun);
                         <button type="submit" class="btn btn-primary" name="delete_city">
                             Delete
                         </button>
-<hr>
-                        <div class="form-group">
-                            <label for="zip_code">
-                                City Name
-                            </label>
-                            <input type="text"  class="form-control" id="zip_code"  name="zip_code" size="10"/>
-                        </div>
-                            <button type="submit" class="btn btn-primary" name="SAVE_POSTAL">
-                                Save Zip Code
-                            </button>
-                        </div>
-<hr>
+
+
 
 
             <!--</form>-->
 <form>
-    <div class="col-md-4">
-        <?php
-
-        $query = "select postal_code from cityzipcodes where city_id=$q";
-        //echo $query;
-        global $db;
-        $result = mysqli_query($db, $query);
-        $fields_num = mysqli_field_count($db);
-        while (($row = $result->fetch_assoc()) !== null) {
-            $data[] = $row;
-        }
-        if ( @$data!==null) {
-            @$colNames = array_keys(reset($data));
-            echo "<row>";
-            echo "<table>";
-            echo "<thead>";
-            foreach ($colNames as $colName) {
-                if ($colName != "pkey") {
-                    if ($colName != "screenname") {
-                        echo "<th>$colName</th>";
-                    }
-                }
-            };
-            echo "</thead>";
-            foreach ($data as $row) {
-                echo "<tr>";
-                foreach ($colNames as $colName) {
-                    if ($colName != "pkey") {
-                        if ($colName != "screenname") {
-                            echo "<td>" . $row[$colName] . "</td>";
-                        }
-
-                    }
-                }
-                echo "</tr>";
-                echo "</row>";
-            }
-        }
-
-        ?>
-    </div>
             <div class="row">
                 <div class="col-md-4">
-
-
                 </div>
                 <div class="col-md-4">
-
                 </div>
             </div>
         </div>
@@ -185,9 +130,6 @@ function update_city($city_id)
     $mysqli->close();
     return $city_id;
 }
-?>
-<?php
-
 ?>
 
 </html>

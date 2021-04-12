@@ -33,7 +33,7 @@ if (isset($_GET['logout'])) {
     <div class="row">
         <div class="col-md-4">
             <?php
-            include 'admin_menu.php' ;
+            include 'admin_menu2.php';
             ?>
         </div>
         <div class="col-md-4">

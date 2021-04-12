@@ -14,7 +14,7 @@ $screenData=getBulkData($QueryToRun);
         <div class="row">
             <div class="col-md-4">
                 <?php
-                include '../admin/admin_menu.php' ;
+                include '../admin/admin_menu2.php';
                 ?>
             </div>
    <!-- First Columns is always the menu ends-->

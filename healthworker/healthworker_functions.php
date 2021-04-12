@@ -9,7 +9,7 @@ if (isset($_POST['create_new_schedule'])) {
     $schedule_date = e($_POST['schedule_date']);
 
     $person_id = create_new_schedule($person_id, $facility_name, $schedule_date);
-    $location ="/COM353_SUHEL/healthworker/healthworker_view.php?person_id=".$person_id;
+    $location ="/COM353/healthworker/healthworker_view.php?person_id=".$person_id;
     header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 }
 
@@ -19,13 +19,13 @@ if (isset($_POST['delete_schedule'])) {
     $schedule_date = e($_POST['schedule_date']);
 
     $person_id = delete_schedule($person_id, $facility_id, $schedule_date);
-    $location ="/COM353_SUHEL/healthworker/healthworker_view.php?person_id=".$person_id;
+    $location ="/COM353/healthworker/healthworker_view.php?person_id=".$person_id;
     header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 }
 
 if (isset($_POST['update_schedule'])) {
     $person_id = update_schedule();
-    $location ="/COM353_SUHEL/healthworker/healthworker_view.php?person_id=".$person_id;
+    $location ="/COM353/healthworker/healthworker_view.php?person_id=".$person_id;
     header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 }
 

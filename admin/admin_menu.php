@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>Main Admin Page</title>
@@ -12,12 +11,12 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<!--<div class="container-fluid">
     <div class="row">
         <div class="col-4 col-md-2">
             <div style="position: absolute; left: 0">
                 <div style="padding: 10px">
-                    <a href="../person/person_record.php" class="btn btn-outline-secondary" style="width: 175px">
+                    <a href="../person/person_record_search.php" class="btn btn-outline-secondary" style="width: 175px">
                         <span class="glyphicon glyphicon-log-out"></span>Person Records</a>
                 </div>
                 <div style="padding: 10px">
@@ -58,7 +57,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <!--<div>
     <div class="row">
@@ -96,8 +95,6 @@
         </div>
     </div>
 </div> -->
-
-
-   </body>
+ </body>
 </html>
 

@@ -8,7 +8,7 @@ include 'region_functions.php' ;
     <div class="row">
      <div class="col-md-4">
             <?php
-            include '../admin/admin_menu.php' ;
+            include '../admin/admin_menu2.php';
             ?>
         </div>
         <div class="col-md-4">

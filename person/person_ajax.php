@@ -14,9 +14,9 @@ $sql="select * from city where region_id=(select region_id from region where reg
 $result = mysqli_query($mysqli, $sql);
    echo "<label for=city_id>City .</label>";
    echo "<select name='city_id' id='city_id' onselect='setValue(this.value)' required>";
-   echo "<option value='0'> ---Select City-- </option>";
+        echo "<option value='0'> ---Select City-- </option>";
         while($row = mysqli_fetch_array($result)) {
-        echo  "<option value=$row[0]>$row[0]  $row[1]</option>";
+        echo  "<option value=$row[0]>$row[1] -   $row[3]</option>";
         }
    echo "</select>";
 

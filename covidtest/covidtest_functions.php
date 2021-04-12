@@ -2,7 +2,7 @@
 
 include('../config.php');
 
-if (isset($_POST['add_new_covidtest'])) {
+if (isset($_POST['ADD_NEW_COVIDTEST'])) {
     $test_id=add_test();
     echo "hello world".$test_id;
     $location ="/COM353/covidtest/covidtest_addedit.php?test_id=".$test_id;
@@ -34,7 +34,7 @@ if (isset($_POST['edit_covidtest_report'])) {
 
 
 
-function add_test()
+/*function add_test()
 {
     global $mysqli;
     $date = date_create();
@@ -47,7 +47,7 @@ function add_test()
     //$mysqli->query($query);
     $mysqli->close();
     return  $test_id;
-}
+} */
 
 function getRelatedPerson(){
     global $db;
@@ -79,29 +79,7 @@ function getAllHealthCenters(){
 
 }
 
-function update_ui_covidtest($test_id)
-{
-    echo " suhel updating";
-    global $mysqli;
-    //$person_id = e($_POST['person_id']);
-    $person_id=e($_POST['person_id']);
-    $test_date=e($_POST['test_date']);
-    $test_center=e($_POST['test_center']);
-    $tested_by=e($_POST['tested_by']);
-    $result_date=e($_POST['result_date']);
-    $test_result=e($_POST['test_result']);
 
-    $query = "UPDATE `Diagnostic` SET `result_date`='$result_date' ,`person_id` = $person_id,`tested_by` =$tested_by,`performed_at`= '$test_center', `test_date` = '$test_date' ,`result` = '$test_result' WHERE `Diagnostic`.`test_id` = $test_id";
-    //$query = "UPDATE `Diagnostic` SET `person_id` = $person_id ,`test_date` = '$test_date',test_center` = '$test_center' WHERE `DIAGNOSTICS `.`test_id`=$test_id";
-    echo "one";
-    if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $query->error;
-    }
-
-    return $test_id;
-}
 
 
 
