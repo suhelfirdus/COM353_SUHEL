@@ -453,7 +453,7 @@ function displayTableByCols($query_name,$url){
 
             }else{
 
-                echo "<td><a href=../$url/" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+                echo "<td><a href=../$url/" . @$row['screenname']  . @$row['pkey'] . ">view</a>";
             }
 
 

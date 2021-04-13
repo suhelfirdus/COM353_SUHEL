@@ -3,11 +3,20 @@ include '../UICommon/template.php';
 include 'region_functions.php';
 
 $q = $_GET['region_id'];
+$fromdate = @$_GET['fromdate'];
+$todate = @$_GET['todate'];
 //echo $q;
 $QueryToRun = "SELECT * FROM region_det_view WHERE REGION_ID=$q";
 //echo $QueryToRun;
 $screenData = getBulkData($QueryToRun);
 ?>
+<head>
+    <script>
+        function getHistory(){
+            alert('get history');
+        }
+    </script>
+</head>
 <body>
 <div class="container-fluid">
     <div class="row">
@@ -23,6 +32,7 @@ $screenData = getBulkData($QueryToRun);
                         <button type="submit" class="btn btn-primary" name="add_new_Region">
                             Add New Region
                         </button>
+                        <hr>
                         <div class="form-group">
                             <label for="region_id">
                                 Region Id
@@ -51,6 +61,7 @@ $screenData = getBulkData($QueryToRun);
                         <button type="submit" class="btn btn-primary" name="ADD_NEW_CITY">
                             Add New City
                         </button>
+                        <hr>
 
                         <?php
                         $query = "select pkey,screenname,city_name,province from cities_det_view where region_id=$screenData[region_id]";
@@ -128,19 +139,46 @@ $screenData = getBulkData($QueryToRun);
                 <div class="col-md-12">
 
                     <table class="table">
-                        <tr>
+                        <tr><form>
                             <th>History of Alerts</th>
-
-                        </tr>
+                                <td><input type="hidden" class="form-control" id="region_id" name="region_id" value="<?php echo $screenData['region_id'] ?>"></td>
+                            <td><label for="fromdate">
+                                    From Date
+                                </label>
+                            </td>
+                                <td><input type="date" class="form-control" id="fromdate" name="fromdate"></td>
+                            <td>
+                                <label for="todate">
+                                    To Date
+                                </label>
+                            </td>
+                                <td><input type="date" class="form-control" id="todate" name="todate"></td>
+                            <td><button type="submit" class="btn btn-primary" >FILTER</button></td>
+                            </form> </tr>
                     </table>
+                    <div id="MessageHist">
                     <?php
-                    $table_name = "select alert_id,alert_desc,population,alert_date_time from alerts_view where region_id='$screenData[region_id]'";
-                    $url="../alerts/alert_view.php?region_name=$screenData[region_name]";
+                    if ($fromdate!=''){
+                        if ($todate!=''){
+                            $table_name = "select alerts.alert_id,alerts.alert_date_time,alerts.is_active,alerts.alert_level_id,alerts.alert_description from
+(select a.alert_id,a.alert_date_time,a.is_active,a.alert_level_id,b.alert_description,DATE(a.alert_date_time) as alert_date
+from alert_system a,alert_category b where a.alert_level_id=b.alert_level_id and
+a.region_id='$screenData[region_id]' ) alerts
+where alerts.alert_date between '$fromdate' and '$todate';";
+                        }
+                    }else{
+                        $table_name ="select a.alert_id,a.alert_date_time,a.is_active,a.alert_level_id,b.alert_description from alert_system a,alert_category b where a.alert_level_id=b.alert_level_id
+                    and a.region_id='$screenData[region_id]'";
+                    }
+                   // echo $table_name;
+
+                    //$table_name ="select a.alert_id,a.alert_date_time,a.is_active,a.alert_level_id,b.alert_description from alert_system a,alert_category b where a.alert_level_id=b.alert_level_id
+                    //and a.region_id='$screenData[region_id]'";
+                    //$table_name = "select alert_id,alert_desc,population,alert_date_time from alerts_view where region_id='$screenData[region_id]'";
+                    $url="../COM353/alerts/alert_view.php?region_id=$screenData[region_id]";
                     displayTableByCols($table_name,$url)
-
-                    //displayTable($table_name);
                     ?>
-
+                    </div>
                 </div>
             </div>
 

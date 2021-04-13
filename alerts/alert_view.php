@@ -1,10 +1,10 @@
 <?php
 include '../UICommon/template.php' ;
 include 'alert_functions.php' ;
-$q = $_GET['region_name'];
+$q = $_GET['region_id'];
 //echo $q;
 
-$QueryToRun="SELECT * FROM alerts_view WHERE region_name='$q'";
+$QueryToRun="SELECT * FROM alerts_view WHERE region_id='$q'";
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 
@@ -110,7 +110,7 @@ $screenData=getBulkData($QueryToRun);
                     <!--<input type="text" class="form-control" id="region_name"  name="region_name" value="<?php echo (isset($screenData['region_id'])) ? $screenData['region_id'] : null ?>"/> -->
 
                     <select name="change_alert_to" id="change_alert_to" >
-                        <?php echo getNextAlert($q);
+                        <?php echo getNextAlert($screenData['region_name']);
                         ?>
                     </select>
 

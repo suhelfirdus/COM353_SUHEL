@@ -88,10 +88,7 @@ function displaysSymptoms($table_name, $id){
 
     if($result != false) {
 
-        $query = "SELECT 
-                    `person_id`         AS      `ID`,
-                    `date_reported`     AS      `DATE REPORTED`,
-                    `time_reported`     AS      `TIME REPORTED`,
+        $query = "SELECT  `person_id`         AS      `ID`,`date_reported`     AS      `DATE REPORTED`, `time_reported`     AS      `TIME REPORTED`,
                     `symptoms`          AS      `SYMPTOM`,  
                     `body_temp`         AS      `BODY TEMPERATURE`
        
