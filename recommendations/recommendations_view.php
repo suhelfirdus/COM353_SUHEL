@@ -1,8 +1,9 @@
 <?php
 include '../UICommon/template.php' ;
 include 'recommendations_functions.php' ;
-$q = $_GET['rec_id'];
+//$q = $_GET['rec_id'];
 //echo $q;
+$q =(isset($_GET['rec_id'])) ? $_GET['region_id'] : $_SESSION["rec_id"];
 $QueryToRun="SELECT * FROM recommendations WHERE rec_id=$q";
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);

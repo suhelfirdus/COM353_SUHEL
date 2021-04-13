@@ -1,5 +1,6 @@
 <?php
 include '../UICommon/template.php' ;
+include 'recommendations_functions.php' ;
 
 ?>
 <body>
@@ -37,11 +38,11 @@ include '../UICommon/template.php' ;
                     SEARCH
                 </button>&NonBreakingSpace;
                 <hr>
-                <button type="submit" class="btn btn-primary" name="ADD_RECOMMENDATION" >
+                <button type="submit" class="btn btn-primary" name="add_new_recommendation" >
                     ADD NEW RECOMMENDATION
                 </button>
                 <hr>
-
+            </form>
         </div>
         <!-- Second column-->
         <div class="col-md-4">

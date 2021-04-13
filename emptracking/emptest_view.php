@@ -230,7 +230,7 @@ where a.schedule_date between '$fourdays' and '$screenData[test_date]'";
 
                     }
                 }
-                echo "<td><a href=emptest_view.php?test_id=". @$row['test_id'] . ">view</a>";
+                //echo "<td><a href=emptest_view.php?test_id=". @$row['test_id'] . ">view</a>";
                 echo "</tr>";
 
                 echo "</row>";

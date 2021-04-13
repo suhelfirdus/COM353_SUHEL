@@ -1,7 +1,8 @@
 <?php
 include '../UICommon/template.php' ;
 include 'alert_functions.php' ;
-$q = $_GET['region_id'];
+//$q = $_GET['region_id'];
+$q =(isset($_GET['region_id'])) ? $_GET['region_id'] : $_SESSION["region_id"];
 //echo $q;
 
 $QueryToRun="SELECT * FROM alerts_view WHERE region_id='$q'";
@@ -104,6 +105,17 @@ $screenData=getBulkData($QueryToRun);
                 </div>
 
                 <div class="form-group">
+                    <label for="email_template">
+                        Recommendation Email Template
+                    </label>
+                    <select name="email_template" id="email_template">
+                        <?php echo getEmailTemplate();?>
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
                     <label for="change_alert_to">
                         Select Next Alert
                     </label>
@@ -161,7 +173,7 @@ $screenData=getBulkData($QueryToRun);
 function set_new_alert_save()
 {
 
-    echo "hello world";
+
     global $mysqli;
     $region_id = e($_POST['region_id']);
     $region_name = e($_POST['region_name2']);
@@ -169,30 +181,33 @@ function set_new_alert_save()
     $current_active_alert = e($_POST['current_active_alert']);
     $change_alert_to = e($_POST['change_alert_to']);
     $notify_people = e($_POST['notify_people']);
+    $email_rec = e($_POST['email_template']);
     $active="N";
     $newstatus="Y";
 
-    echo "$region_id ".$region_id;
-    echo "$region_name".$region_name;
-    echo "$change_alert_to" .$change_alert_to;
-    echo "$notify_people" .$notify_people;
+    //echo "$region_id ".$region_id;
+    //echo "$region_name".$region_name;
+    //echo "$change_alert_to" .$change_alert_to;
+    //echo "$notify_people" .$notify_people;
+
 
 
     $query="update alert_system set is_active='$active' where region_id='$region_id'";
-    $queryinsert="insert into alert_system(region_id,alert_level_id,is_active,notify_people) values($region_id,'$change_alert_to','$newstatus','$notify_people')";
-    echo  $queryinsert;
+    $queryinsert="insert into alert_system(region_id,alert_level_id,is_active,notify_people,email_rec_id,alert_type) values($region_id,'$change_alert_to','$newstatus','$notify_people','$email_rec','GENERAL')";
+    //echo  $queryinsert;
     if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
+        echo "<b>Record updated successfully</b>";
     } else {
         echo "Error updating record: " . $query->error;
     }
 
     if ($mysqli->query($queryinsert) === TRUE) {
-        echo "Record updated successfully";
+        //echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
     $mysqli->close();
+    $_SESSION["region_id"]=$region_id;
     return $region_name;
 
 }

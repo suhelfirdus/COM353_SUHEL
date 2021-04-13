@@ -5,7 +5,7 @@ include('../config.php');
 if (isset($_POST['add_new_recommendation'])) {
     $rec_id=add_new_recommendations();
     echo "hello world".$rec_id;
-    $location ="/COM353/recommendations/recommendations_view.php?region_id=".$rec_id;
+    $location ="/COM353/recommendations/recommendations_view.php?rec_id=".$rec_id;
     header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
 
 }
@@ -13,7 +13,8 @@ if (isset($_POST['update_recommendation_btn'])) {
 
     $rec_id = e($_POST['rec_id']);
     $rec_id = update_region($rec_id);
-    header("Location: recommendations_record.php");
+    $_SESSION["rec_id"]=$rec_id;
+    //header("Location: recommendations_record.php");
 }
 
 if (isset($_POST['delete_recommendations_btn'])) {
@@ -42,7 +43,7 @@ function update_region($rec_id)
     $rec_date = e($_POST['rec_date']);
     $rec_text = e($_POST['rec_text']);
     $query = "UPDATE `recommendations` SET `rec_name` = '$rec_name',`rec_date` = '$rec_date',`rec_text` = '$rec_text'  WHERE `recommendations`.`rec_id` = $rec_id";
-    echo  $query;
+    //echo  $query;
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
