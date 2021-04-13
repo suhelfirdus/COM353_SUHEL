@@ -2,6 +2,27 @@
 
 include('../config.php');
 
+
+
+if (isset($_POST['ADD_NEW_CITY'])) {
+
+    $city_id=add_new_city();
+    $location ="/COM353/cities/cities_view.php?city_id=".$city_id;
+    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
+
+}
+
+function add_new_city()
+{
+    global $mysqli;
+    $query = "INSERT INTO city(city_id)VALUES(null)";
+    $mysqli->query($query);
+    $city_id=$mysqli->insert_id;
+    $mysqli->close();
+    return  $city_id;
+}
+
+
 if (isset($_POST['add_new_Region'])) {
     $region_id=add_new_region();
     echo "hello world".$region_id;

@@ -412,6 +412,62 @@ function getHealthFacilities(){
 
 
 
+function displayTableByCols($query_name,$url){
+    global $db;
+    $whereClause="1=1";
+    $query = $query_name;
+
+    $result = mysqli_query($db, $query);
+    $fields_num = mysqli_field_count($db);
+
+    while (($row = $result->fetch_assoc()) !== null) {
+        $data[] = $row;
+    }
+
+    if ( @$data!==null) {
+        @$colNames = array_keys(reset($data));
+
+        echo "<table class=table>";
+        echo "<thead>";
+
+        foreach ($colNames as $colName) {
+            if ($colName != "pkey") {
+                if ($colName != "screenname") {
+                    echo "<th>$colName</th>";
+                }
+            }
+        };
+        echo "</thead>";
+        foreach ($data as $row) {
+            echo "<tr>";
+            foreach ($colNames as $colName) {
+                if ($colName != "pkey") {
+                    if ($colName != "screenname") {
+                        echo "<td>" . $row[$colName] . "</td>";
+                    }
+
+                }
+            }
+            echo "<td><a href=" . $url . ">view</a>";
+
+            /* try {
+                 if(array_key_exists(@$row['screenName'],$row)){
+                     echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+                 }
+             } catch (Exception $e) {
+                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
+             }*/
+
+
+            echo "</tr>";
+        }
+    }
+
+
+
+    mysqli_free_result($result);
+}
+
 
 
 

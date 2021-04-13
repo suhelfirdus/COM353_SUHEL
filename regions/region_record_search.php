@@ -1,6 +1,6 @@
 <?php
 include '../UICommon/template.php' ;
-
+include 'region_functions.php' ;
 ?>
 <body>
 <!-- First Columns is always the menu -->
@@ -36,8 +36,8 @@ include '../UICommon/template.php' ;
                     SEARCH
                 </button>&NonBreakingSpace;
                 <hr>
-                <button type="submit" class="btn btn-primary" name="SEARCH_PERSON" >
-                    ADD NEW PERSON
+                <button type="submit" class="btn btn-primary" name="add_new_Region" >
+                    ADD NEW REGION
                 </button>
                 <hr>
 
@@ -63,7 +63,7 @@ if (isset($_POST['SEARCH_PERSON'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
     $query = "select * from region_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);

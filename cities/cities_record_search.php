@@ -38,8 +38,8 @@ include '../UICommon/template.php' ;
                     SEARCH
                 </button>&NonBreakingSpace;
                 <hr>
-                <button type="submit" class="btn btn-primary" name="SEARCH_PERSON" >
-                    ADD NEW PERSON
+                <button type="submit" class="btn btn-primary" name="add_new_city" >
+                    ADD NEW CITY
                 </button>
                 <hr>
 

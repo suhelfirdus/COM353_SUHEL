@@ -89,7 +89,7 @@ $screenData=getBulkData($QueryToRun);
 <hr>
                         <div class="form-group">
                             <label for="zip_code">
-                                City Name
+                                Postal Code
                             </label>
                             <input type="text"  class="form-control" id="zip_code"  name="zip_code" size="10"/>
                         </div>
