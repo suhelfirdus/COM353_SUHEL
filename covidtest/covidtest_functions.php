@@ -80,6 +80,81 @@ function getAllHealthCenters(){
 }
 
 
+function displaysSymptoms($table_name, $id){
+    global $mysqli;
+
+    $query = "SELECT COUNT(*) AS RowCnt FROM $table_name";
+    $result = mysqli_query($mysqli, $query);
+
+    if($result != false) {
+
+        $query = "SELECT 
+                    `person_id`         AS      `ID`,
+                    `date_reported`     AS      `DATE REPORTED`,
+                    `time_reported`     AS      `TIME REPORTED`,
+                    `symptoms`          AS      `SYMPTOM`,  
+                    `body_temp`         AS      `BODY TEMPERATURE`
+       
+                FROM {$table_name} 
+                ";
+
+        $result = mysqli_query($mysqli, $query);
+
+
+        //$fields_num = mysqli_field_count($mysqli);
+
+        while (($row = $result->fetch_assoc()) !== null) {
+            $data[] = $row;
+        }
+
+        if (@$data !== null) {
+            @$colNames = array_keys(reset($data));
+
+            echo "<table class='table'>";
+            echo "<thead>";
+
+            foreach ($colNames as $colName) {
+                if ($colName != "person_id") {
+                    echo "<th>$colName</th>";
+                }
+            }
+
+
+
+            echo "</thead>";
+            foreach ($data as $row) {
+                echo "<tr>";
+                foreach ($colNames as $colName) {
+                    if ($colName != "person_id") {
+                        echo "<td>" . $row[$colName] . "</td>";
+                    }
+                }
+
+                echo "</tr>";
+            }
+        }
+
+        mysqli_free_result($result);
+        $mysqli->close();
+    }else{
+        echo "Nothing to display";
+    }
+}
+
+function getHealthWorkerNameById($hwid){
+    global $mysqli;
+    $query = "SELECT first_name, last_name FROM person WHERE person_id = '$hwid'";
+    if($mysqli->query($query) == true) {
+        $result = $mysqli->query($query);
+        $row = $result->fetch_assoc();
+        return $row['first_name']." ".$row['last_name'];
+    } else{
+        $mysqli->error(error_get_last());
+    }
+    $mysqli->close();
+}
+
+
 
 
 
