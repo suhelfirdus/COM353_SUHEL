@@ -448,7 +448,14 @@ function displayTableByCols($query_name,$url){
 
                 }
             }
-            echo "<td><a href=" . $url . ">view</a>";
+            if ($url==''){
+                echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+
+            }else{
+
+                echo "<td><a href=../$url/" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+            }
+
 
             /* try {
                  if(array_key_exists(@$row['screenName'],$row)){

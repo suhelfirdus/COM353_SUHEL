@@ -159,7 +159,7 @@ $screenData=getBulkData($QueryToRun);
                     </label>
 
                     <select name="health_facility" id="health_facility" disabled>
-                        <?php echo  "<option value=$screenData[health_facility]>$screenData[health_facility]</option>"?>
+                        <?php echo  "<option value=$screenData[health_facility_id]>$screenData[health_facility_id]</option>" ?>
                         <?php echo $region=getHealthFacilities();
                         ?>
                     </select>
@@ -278,8 +278,12 @@ $screenData=getBulkData($QueryToRun);
             <table class="table">
                 <?php
                 //echo "<b>Test History</b>";
-                $table_name = "diagnostic where person_id='$screenData[person_id]'";
-                displayTable($table_name);
+                //displayTableByCols
+               // select test_id,performed_at,tested_by,test_date,result_date,result from diagnostic_det_view order by result_date
+                $table_name = "select pkey,screenname,test_id,performed_at,tested_by,test_date,result_date,result from diagnostic_det_view where person_id='$screenData[person_id]'";
+                $url='covidtest';
+                //displayTable($table_name);
+                displayTableByCols($table_name,$url);
                 ?>
 
             </table>
