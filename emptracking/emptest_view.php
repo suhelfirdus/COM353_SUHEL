@@ -195,10 +195,13 @@ $screenData=getBulkData($QueryToRun);
             $mysqli->error(error_get_last());
         }
         $mysqli->close();
-        echo $fourdays ;
+        //echo $fourdays ;
         global $db;
-        $query = "select * from person_det_view where person_id in (select person_id from work_schedule where facility_id=1 and
-schedule_date between '$fourdays' and '$screenData[test_date]');";
+        $query = "select * from
+(select p.person_id,first_name,p.last_name,p.phone_number,p.email_address,w.schedule_date,w.facility_id from person_det_view p,
+work_schedule  w where w.person_id=p.person_id) a
+where a.schedule_date between '$fourdays' and '$screenData[test_date]'";
+
         $result = mysqli_query($db, $query);
         $fields_num = mysqli_field_count($db);
         while (($row = $result->fetch_assoc()) !== null) {
