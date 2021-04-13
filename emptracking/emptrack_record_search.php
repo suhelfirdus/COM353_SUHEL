@@ -1,7 +1,6 @@
 <?php
 include '../UICommon/template.php' ;
-include 'person_functions.php' ;
-
+include 'emptest_functions.php' ;
 ?>
 <body>
 <!-- First Columns is always the menu -->
@@ -19,18 +18,27 @@ include 'person_functions.php' ;
             <form class="form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                 <!-- Button to call a new Operation  ends -->
                 <div class="form-group">
-                <label for="searchparam">select a param:</label>
+                    <div class="form-group">
+                        <label for="health_facility">
+                            Health Facility
+                        </label>
+
+                        <select name="health_facility" id="health_facility" >
+
+                            <?php echo $region=getHealthFacilities();
+                            ?>
+                        </select>
+                    </div>
+
+                <label for="searchparam">Search Employee By:</label>
                 <select name="searchparam" id="searchparam">
                     <option value="person_id">Person Id</option>
-                    <option value="first_name">First Name</option>
-                    <option value="last_name">Last Name</option>
-                    <option value="street_address">Address</option>
-                    <option value="medicare_number">Medicare Number</option>
-                    <option value="city_name">City</option>
-                    <option value="region_name">Region</option>
-                    <option value="postal_code">Postal Code</option>
-                    <option value="is_health_worker">Health Worker</option>
+                    <option value="first_name">Employee First Name</option>
+                    <option value="last_name">Employee last Name</option>
+                    <option value="result_date">Test Result Date</option>
+
                 </select>
+
                 </div>
                 <div class="form-group">
                     <label for="searchvalue">
@@ -39,14 +47,11 @@ include 'person_functions.php' ;
                     <input type="text" class="form-control" id="searchvalue"  name="searchvalue" />
                 </div>
 
-                <button type="submit" class="btn btn-primary" name="SEARCH_PERSON" >
+                <button type="submit" class="btn btn-primary" name="SEARCH_EMPLOYEE" >
                     SEARCH
                 </button>&NonBreakingSpace;
                 <hr>
-                <button type="submit" class="btn btn-primary" name="add_new_person" >
-                    ADD NEW PERSON
-                </button>
-                <hr>
+
 
         </div>
         <!-- Second column-->
@@ -63,14 +68,29 @@ include 'person_functions.php' ;
                 </div>
         </div>
     </div>
-
+    <table>
+        <tr><th> Employee who are tested positive</th></tr>
+    </table>
 </body>
 <?php
-if (isset($_POST['SEARCH_PERSON'])) {
+if (isset($_POST['SEARCH_EMPLOYEE'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
-    $query = "select person_id,first_name,last_name,date_of_birth,medicare_number,phone_number,citizenship,email_address,mothers_name,fathers_name,pkey,screenname from person_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo "Employees who were tested Positive for Covid-19";
+    //echo e($_POST['health_facility']);
+    $healthfacilty=e($_POST['health_facility']);
+    //echo $searchparam;
+    //echo $searchvalue;
+
+    $query ="select * from(
+select p.health_facility_id,p.person_id,p.first_name,p.last_name,d.result_date ,d.result,d.test_id
+from person p, diagnostic d where is_health_worker='Y' and
+p.person_id=d.person_id and d.result='Positive') a where a.health_facility_id=$healthfacilty and a.".$searchparam." like '".$searchvalue."%'";
+
+
+
+   // $query = "select * from region_det_view where ".$searchparam." like '".$searchvalue."%'";
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);
@@ -80,7 +100,7 @@ if (isset($_POST['SEARCH_PERSON'])) {
     if ( @$data!==null) {
         @$colNames = array_keys(reset($data));
         echo "<row>";
-        echo "<table>";
+        echo "<table class=table>";
         echo "<thead>";
         foreach ($colNames as $colName) {
             if ($colName != "pkey") {
@@ -100,7 +120,7 @@ if (isset($_POST['SEARCH_PERSON'])) {
 
                 }
             }
-            echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+            echo "<td><a href=emptest_view.php?test_id=". @$row['test_id'] . ">view</a>";
             echo "</tr>";
 
             echo "</row>";

@@ -86,7 +86,7 @@
         <a href="../covidtest/covidtest_record_search.php">Covid Tests</a>
         <a href="../alerts/alert_record_search.php">Set Alert</a>
         <a href="../messages/messages_record_search.php">Messages History</a>
-        <a href="#">Reports</a>
+        <a href="../emptracking/emptrack_record_search.php">Emp Tracking Reports</a>
 
     </div>
 </div>

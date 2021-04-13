@@ -8,12 +8,14 @@ $screenData=getBulkData($QueryToRun);
 <head>
     <script>
         function enableHealthFacilty() {
+            //alert(document.getElementById('is_health_worker').value)
 
-            if(document.getElementById('is_health_worker').value=="Y"){
+            if(document.getElementById('is_health_worker').value=="Yes"){
                 document.getElementById('health_facility').disabled=false;
             }
-            if(document.getElementById('is_health_worker').value=="N"){
+            if(document.getElementById('is_health_worker').value=="No"){
                 document.getElementById('health_facility').disabled=true;
+                document.getElementById('health_facility').innerText='';
             }
         }
 
@@ -21,12 +23,12 @@ $screenData=getBulkData($QueryToRun);
     </script>
     <script>
         function setValue() {
-            alert('hello    1'+document.getElementById('zip_id').value);
+            //alert('hello    1'+document.getElementById('zip_id').value);
             //alert(document.getElementById('city_id').value);
             document.getElementById('city_code').value=document.getElementById('city_id').value;
             document.getElementById('new_postal').value=document.getElementById('zip_id').value;
 
-           alert(document.getElementById('new_postal').value);
+           //alert(document.getElementById('new_postal').value);
         }
 
 
@@ -170,8 +172,8 @@ $screenData=getBulkData($QueryToRun);
                     </label>
                     <select name="is_health_worker" id="is_health_worker" required onchange="enableHealthFacilty()">
                         <option value=<?php echo $screenData['is_health_worker']?>><?php echo $screenData['is_health_worker']?></option>
-                        <option value="Y">Yes</option>
-                        <option value="N">No</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                     </select>
                 </div>
                 <!--<div class="form-group">
@@ -187,7 +189,7 @@ $screenData=getBulkData($QueryToRun);
                     </label>
 
                     <select name="health_facility" id="health_facility" disabled>
-                        <?php echo  "<option value=$screenData[health_facility_id]>$screenData[health_facility_id]</option>" ?>
+                        <?php echo  "<option value=$screenData[health_facility_id]>$screenData[facility_name]</option>" ?>
                         <?php echo $region=getHealthFacilities();
                         ?>
                     </select>
