@@ -27,8 +27,8 @@ include 'person_functions.php' ;
                     <option value="street_address">Address</option>
                     <option value="medicare_number">Medicare Number</option>
                     <option value="city_name">City</option>
-                    <option value="audi">Region</option>
-                    <option value="audi">Postal Code</option>
+                    <option value="region_name">Region</option>
+                    <option value="postal_code">Postal Code</option>
                     <option value="is_health_worker">Health Worker</option>
                 </select>
                 </div>
@@ -70,7 +70,7 @@ if (isset($_POST['SEARCH_PERSON'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
     $query = "select first_name,last_name,date_of_birth,medicare_number,phone_number,citizenship,email_address,mothers_name,fathers_name,pkey,screenname from person_det_view where ".$searchparam." like '".$searchvalue."%'";
-    //echo $query;
+    echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);

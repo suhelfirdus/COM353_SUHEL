@@ -21,14 +21,21 @@ $screenData=getBulkData($QueryToRun);
     </script>
     <script>
         function setValue() {
-            //alert('hello');
+            alert('hello    1'+document.getElementById('zip_id').value);
             //alert(document.getElementById('city_id').value);
             document.getElementById('city_code').value=document.getElementById('city_id').value;
-            //alert('set');
+            document.getElementById('new_postal').value=document.getElementById('zip_id').value;
+
+           alert(document.getElementById('new_postal').value);
         }
+
+
+
+
+
         function showCities(str) {
 
-            //alert(str);
+            alert(str);
             if (str == "") {
                 document.getElementById("txtHint").innerHTML = "";
                 return;
@@ -42,6 +49,27 @@ $screenData=getBulkData($QueryToRun);
                 };
 
                 xmlhttp.open("GET","person_ajax.php?q="+str,true);
+                xmlhttp.send();
+            }
+        }
+
+
+        function showZip(str) {
+
+            alert(str);
+            if (str == "") {
+                document.getElementById("txtZip").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtZip").innerHTML = this.responseText;
+                        //alert(this.responseText);
+                    }
+                };
+
+                xmlhttp.open("GET","getzip_ajax.php?q="+str,true);
                 xmlhttp.send();
             }
         }
@@ -226,7 +254,7 @@ $screenData=getBulkData($QueryToRun);
                 <label for="city_id">
                     City
                 </label>
-                <select name="city_name" id="city_name" required>
+                <select name="city_name" id="city_name"  onchange="showZip(this.value)" required>
                     <?php echo  "<option value=$screenData[city_id]>$screenData[city_name]</option>"?>
                     <option value='0'> ---Select City-- </option>
                 </select>
@@ -240,10 +268,18 @@ $screenData=getBulkData($QueryToRun);
             </div>
 
             <div class="form-group">
-                <label for="new_postal">
+
+                <input type="hidden" class="form-control" name ="new_postal" id="new_postal" value="<?php echo $screenData['postal_code']?>" required/>
+            </div>
+
+            <div id="txtZip">
+                <label for="zip_id">
                     Postal Code
                 </label>
-                <input type="text" class="form-control" name ="new_postal" id="new_postal" value="<?php echo $screenData['postal_code']?>" required/>
+                <select name="zip_id" id="zip_id" required>
+                    <?php echo  "<option value=$screenData[postal_code]>$screenData[postal_code]</option>"?>
+                    <option value='0'> ---Select Zip-- </option>
+                </select>
             </div>
 
 
@@ -361,6 +397,9 @@ function update_ui_person($person_id)
     //print_r($_POST);
     $city_id = e($_POST['city_code']);
     $postal_code = e($_POST['new_postal']);
+    //$postal_code = e($_POST['zip_id']);
+    echo $postal_code;
+
     //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
     $query = "UPDATE `address` SET  `city_id` = '$city_id' ,   `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
 
