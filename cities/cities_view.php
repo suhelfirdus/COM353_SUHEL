@@ -160,7 +160,7 @@ $screenData=getBulkData($QueryToRun);
 
 function update_city($city_id)
 {
-    global $mysqli;
+    global $db;
     print_r($_POST);
     $city_id = e($_POST['city_id']);
     $city_name = e($_POST['city_name']);
@@ -170,19 +170,19 @@ function update_city($city_id)
 
     $query = "UPDATE `city` SET `city_name` = '$city_name',`province`='$province_name' WHERE `city`.`city_id` = $city_id";
 
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
     $query = "UPDATE `city` SET `region_id` = (select region_id from region where region_name='$region_name') WHERE `city`.`city_id` = $city_id";
     echo $query;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $city_id;
 }
 ?>

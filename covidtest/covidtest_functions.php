@@ -96,10 +96,10 @@ function getAllHealthCenters(){
 
 
 function displaysSymptoms($table_name, $id){
-    global $mysqli;
+    global $db;
 
     $query = "SELECT COUNT(*) AS RowCnt FROM $table_name";
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($db, $query);
 
     if($result != false) {
 
@@ -110,7 +110,7 @@ function displaysSymptoms($table_name, $id){
                 FROM {$table_name} 
                 ";
 
-        $result = mysqli_query($mysqli, $query);
+        $result = mysqli_query($db, $query);
 
 
         //$fields_num = mysqli_field_count($mysqli);
@@ -147,23 +147,23 @@ function displaysSymptoms($table_name, $id){
         }
 
         mysqli_free_result($result);
-        $mysqli->close();
+        $db->close();
     }else{
         echo "Nothing to display";
     }
 }
 
 function getHealthWorkerNameById($hwid){
-    global $mysqli;
+    global $db;
     $query = "SELECT first_name, last_name FROM person WHERE person_id = '$hwid'";
-    if($mysqli->query($query) == true) {
-        $result = $mysqli->query($query);
+    if($db->query($query) == true) {
+        $result = $db->query($query);
         $row = $result->fetch_assoc();
         return $row['first_name']." ".$row['last_name'];
     } else{
-        $mysqli->error(error_get_last());
+        $db->error(error_get_last());
     }
-    $mysqli->close();
+    $db->close();
 }
 
 

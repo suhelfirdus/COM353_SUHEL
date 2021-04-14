@@ -111,14 +111,14 @@ if (isset($_POST['SEARCH_PERSON'])) {
 
 function add_test()
 {
-    global $mysqli;
+    global $db;
     $date = date_create();
     echo date_timestamp_get($date);
     //$facility_id=generateRandomString();
     $query = "INSERT INTO diagnostic(test_id, performed_at, tested_by) values(null,'',0);";
-    $mysqli->query($query);
-    $test_id=$mysqli->insert_id;
-    $mysqli->close();
+    $db->query($query);
+    $test_id=$db->insert_id;
+    $db->close();
     return  $test_id;
 }
 

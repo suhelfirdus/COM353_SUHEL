@@ -32,7 +32,7 @@ if (isset($_POST['update_schedule'])) {
 function update_schedule()
 {
     echo "inside update";
-    global $mysqli;
+    global $db;
     $person_id = $_POST['person_id'];
     $facility_id = $_POST['facility_id'];
     $schedule_date = $_POST['schedule_date'];
@@ -47,7 +47,7 @@ function update_schedule()
                          `schedule_end` = '$schedule_end'
              WHERE person_id = '$person_id' AND `facility_id` = '$facility_id' AND `schedule_date` = '$schedule_date'
                          ";
-    $mysqli->query($query);
+    $db->query($query);
     //$mysqli->close();
 
     return$person_id;
@@ -56,26 +56,26 @@ function update_schedule()
 
 function delete_schedule($person_id, $facility_id, $schedule_date)
 {
-    global $mysqli;
+    global $db;
 
     $query ="DELETE FROM `work_schedule` 
                 WHERE `person_id` = '$person_id' AND 
                       `facility_id` = '$facility_id' AND
                       `schedule_date` = '$schedule_date'";
-    $mysqli->query($query);
+    $db->query($query);
 
-    $mysqli->close();
+    $db->close();
     return $person_id;
 }
 
 function create_new_schedule($person_id, $facility_name, $schedule_date)
 {
     echo "inside create";
-    global $mysqli;
+    global $db;
     echo $facility_name;
 
     $query = "SELECT facility_id FROM publichealthcenter WHERE facility_name = '$facility_name'";
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($db, $query);
     if($result == false) {
         die("Error");
     }
@@ -87,18 +87,18 @@ function create_new_schedule($person_id, $facility_name, $schedule_date)
 
     $query = "INSERT INTO `work_schedule` (`person_id`, `facility_id`, `schedule_date`, `schedule_start`, `schedule_end`) 
                             VALUES ('$person_id', '$facility_id', '$schedule_date', '$schedule_start', '$schedule_end')";
-    $mysqli->query($query);
-    $mysqli->close();
+    $db->query($query);
+    $db->close();
 
     return$person_id;
 }
 
 
 function displaySchedules($table_name, $id){
-    global $mysqli;
+    global $db;
 
     $query = "SELECT COUNT(*) AS RowCnt FROM $table_name";
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($db, $query);
 
     if($result != false) {
 
@@ -111,7 +111,7 @@ function displaySchedules($table_name, $id){
                 FROM {$table_name} 
                 WHERE `person_id` = '$id'";
 
-        $result = mysqli_query($mysqli, $query);
+        $result = mysqli_query($db, $query);
 
 
         //$fields_num = mysqli_field_count($mysqli);
@@ -168,16 +168,16 @@ function displaySchedules($table_name, $id){
         }
 
         mysqli_free_result($result);
-        $mysqli->close();
+        $db->close();
     }else{
         echo "Nothing to display";
     }
 }
 
 function displayWorkers($table_name){
-    global $mysqli;
+    global $db;
     $query = "SELECT COUNT(*) AS RowCnt FROM $table_name";
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($db, $query);
 
     if($result != false) {
         $query = "SELECT 
@@ -188,7 +188,7 @@ function displayWorkers($table_name){
                 `pkey1`, `screenName`
 FROM {$table_name}";
 
-        $result = mysqli_query($mysqli, $query);
+        $result = mysqli_query($db, $query);
 
         while (($row = $result->fetch_assoc()) !== null) {
             $data[] = $row;
@@ -226,7 +226,7 @@ FROM {$table_name}";
         }
 
         mysqli_free_result($result);
-        $mysqli->close();
+        $db->close();
     }
 }
 
@@ -237,9 +237,9 @@ if(isset($_POST['get_list_workers_by_facility'])) {
 function displayWorkersByFacility($table_name){
     if(isset($_POST['facility_name'])) {
         $facility_name = $_POST['facility_name'];
-        global $mysqli;
+        global $db;
         $query = "SELECT COUNT(*) AS RowCnt FROM $table_name WHERE facility_name = '$facility_name'" ;
-        $result = mysqli_query($mysqli, $query);
+        $result = mysqli_query($db, $query);
 
         if($result != false) {
             $query = "SELECT 
@@ -250,7 +250,7 @@ function displayWorkersByFacility($table_name){
                 `pkey1`, `screenName`, `facility_name` AS `Facility Name`
 FROM {$table_name} WHERE facility_name = '$facility_name'";
 
-            $result = mysqli_query($mysqli, $query);
+            $result = mysqli_query($db, $query);
 
             while (($row = $result->fetch_assoc()) !== null) {
                 $data[] = $row;
@@ -287,16 +287,16 @@ FROM {$table_name} WHERE facility_name = '$facility_name'";
             }
 
             mysqli_free_result($result);
-            $mysqli->close();
+            $db->close();
         }
     }
 
 }
 
 function getPublicHealthCenters(){
-    global $mysqli;
+    global $db;
     $query = "SELECT facility_name from publichealthcenter";
-    $result = mysqli_query($mysqli, $query);
+    $result = mysqli_query($db, $query);
     //$numRows=mysqli_num_rows($result);
     $public_health_centers = array();
     while ($row = $result->fetch_row()) {

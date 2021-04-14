@@ -185,16 +185,16 @@ $screenData=getBulkData($QueryToRun);
     </h4>
     <table class="table">
         <?php
-        global $mysqli;
+        global $db;
         $query = "select DATE_ADD('$screenData[test_date]', INTERVAL -14 DAY) as priordate";
-        if($mysqli->query($query) == true) {
-            $result = $mysqli->query($query);
+        if($db->query($query) == true) {
+            $result = $db->query($query);
             $row = $result->fetch_assoc();
             $fourdays=$row['priordate'];
         } else{
-            $mysqli->error(error_get_last());
+            $db->error(error_get_last());
         }
-        $mysqli->close();
+        $db->close();
         //echo $fourdays ;
         global $db;
         $query = "select * from

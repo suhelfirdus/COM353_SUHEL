@@ -27,32 +27,32 @@ if (isset($_POST['delete_person'])) {
 }
 function add_person()
 {
-    global $mysqli;
+    global $db;
     $date = date_create();
     echo date_timestamp_get($date);
     //$facility_id=generateRandomString();
     $query = "INSERT INTO person(person_id)VALUES(null)";
-    $mysqli->query($query);
-    $person_id=$mysqli->insert_id;
+    $db->query($query);
+    $person_id=$db->insert_id;
     $query = "INSERT INTO address(person_id)VALUES('$person_id')";
-    $mysqli->query($query);
+    $db->query($query);
 
-    $mysqli->close();
+    $db->close();
     return  $person_id;
 }
 
 
 function delete_person($person_id)
 {
-    global $mysqli;
+    global $db;
     $facility_id = e($_POST['person_id']);
     $query ="DELETE FROM `person` WHERE `person_id` = $person_id";
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     //return $person_id;
 }
 function generateRandomString($length = 10) {

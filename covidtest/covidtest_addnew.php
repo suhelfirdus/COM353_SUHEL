@@ -127,7 +127,7 @@ $screenData=getBulkData($QueryToRun);
 function update_ui_covidtest($test_id)
 {
     echo " suhel updating";
-    global $mysqli;
+    global $db;
     //$person_id = e($_POST['person_id']);
     $person_id=e($_POST['person_id']);
     $test_date=e($_POST['test_date']);
@@ -139,7 +139,7 @@ function update_ui_covidtest($test_id)
     $query = "UPDATE `Diagnostic` SET `result_date`='$result_date' ,`person_id` = $person_id,`tested_by` =$tested_by,`performed_at`= '$test_center', `test_date` = '$test_date' ,`result` = '$test_result' WHERE `Diagnostic`.`test_id` = $test_id";
     //$query = "UPDATE `Diagnostic` SET `person_id` = $person_id ,`test_date` = '$test_date',test_center` = '$test_center' WHERE `DIAGNOSTICS `.`test_id`=$test_id";
     echo "one";
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;

@@ -27,29 +27,29 @@ if (isset($_POST['delete_Public_health_center'])) {
 }
 function add_new_facility()
 {
-    global $mysqli;
+    global $db;
     $date = date_create();
     echo date_timestamp_get($date);
     $facility_id=generateRandomString();
     $query = "INSERT INTO publichealthcenter(facility_id)VALUES('$facility_id')";
-    $mysqli->query($query);
+    $db->query($query);
     //$facility_id=$mysqli->insert_id;
-    $mysqli->close();
+    $db->close();
     return  $facility_id;
 }
 
 
 function delete_facility($facility_id)
 {
-    global $mysqli;
+    global $db;
     $facility_id = e($_POST['facility_id']);
     $query ="DELETE FROM `publichealthcenter` WHERE `facility_id` = '$facility_id'";
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $facility_id;
 }
 function generateRandomString($length = 10) {
@@ -63,7 +63,7 @@ function generateRandomString($length = 10) {
 }
 function update_facility($facility_id)
 {
-    global $mysqli;
+    global $db;
     $facility_id = e($_POST['facility_id']);
     $facility_name = e($_POST['facility_name']);
     $address= e($_POST['address']);
@@ -79,12 +79,12 @@ function update_facility($facility_id)
     //$query = "UPDATE `publichealthcenter` SET `facility_name` = '$facility_name', `address` = '$address' ,`web_address` = '$web_address' ,`phone_number` = '$phone_number' ,`type` = '$type' , `operating_zone` = '$operating_zone' ,  `method_of_acceptance` = '$method_of_acceptance' , `has_drive_through` = '$has_drive_through'  WHERE `publichealthcenter`.`facility_id` = '$facility_id'";
     $query = "UPDATE `publichealthcenter` SET  `operating_zone` = '$operating_zone' , `web_address` = '$web_address',`has_drive_through` = '$has_drive_through' ,`method_of_acceptance` = '$method_of_acceptance',`type` = '$type' ,`phone_number` = '$phone_number' , `facility_name` = '$facility_name', `address` = '$address'  WHERE `publichealthcenter`.`facility_id` = '$facility_id'";
     echo $query;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $facility_id;
 }
 

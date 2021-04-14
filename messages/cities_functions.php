@@ -25,11 +25,11 @@ if (isset($_POST['delete_city'])) {
 }
 function add_new_region()
 {
-    global $mysqli;
+    global $db;
     $query = "INSERT INTO city(city_id)VALUES(null)";
-    $mysqli->query($query);
-    $region_id=$mysqli->insert_id;
-    $mysqli->close();
+    $db->query($query);
+    $region_id=$db->insert_id;
+    $db->close();
     return  $region_id;
 }
 
@@ -37,15 +37,15 @@ function add_new_region()
 function delete_city($city_id)
 {
     print_r($_POST);
-    global $mysqli;
+    global $db;
     $region_id = e($_POST['city_id']);
     $query ="DELETE FROM `city` WHERE `city_id` = $city_id";
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $region_id;
 }
 

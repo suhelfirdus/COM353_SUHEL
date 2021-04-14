@@ -14,6 +14,7 @@ $errors   = array();
 if (isset($_POST['register_btn'])) {
     register();
 }
+
 if (isset($_POST['add_newPerson_btn'])) {
     echo "adding";
     $person_id=add_new_person();
@@ -33,6 +34,7 @@ if(isset($_POST['cancel_red_adm_btn']))     {
     cancelAdmRegistration();
 }
 
+// REGISTER USER
 // REGISTER USER
 function register(){
     // call these variables with the global keyword to make them available in function
@@ -59,6 +61,21 @@ function register(){
         array_push($errors, "The two passwords do not match");
     }
 
+    if(isset($_POST['is_patient'])) {
+        $temp_day = substr($password_1, 0, 2);
+        $temp_month = substr($password_1, 2, 2);
+        $temp_year = substr($password_1, 4, 4);
+        $temp_password = $temp_year."-".$temp_month."-".$temp_day;
+
+        $query = "SELECT * FROM users_view WHERE medicare_number = '$username' AND DOB = '$temp_password'";
+        $result = $db->query($query);
+        if($result != false) {
+            if($result->num_rows != 1) {   //user not found
+                array_push($errors, "No such Medicare-Number or Date-of-Birth in database. Please verify entered data.");
+            }
+        }
+    }
+
     // register user if there are no errors in the form
     if (count($errors) == 0) {
         $password = md5($password_1);//encrypt the password before saving in the database
@@ -68,8 +85,8 @@ function register(){
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', '$user_type', '$password')";
             mysqli_query($db, $query);
-            $_SESSION['success']  = "New user successfully created!!";
-            header('location: home.php');
+            //$_SESSION['success']  = "New user successfully created!!";
+            header('location: login.php');
         }else{
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', 'user', '$password')";
@@ -78,9 +95,9 @@ function register(){
             // get id of the created user
             $logged_in_user_id = mysqli_insert_id($db);
 
-            $_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
-            $_SESSION['success']  = "You are now logged in";
-            header('location: index.php');
+            //$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
+            //$_SESSION['success']  = "You are now logged in";
+            header('location: login.php');
         }
     }
 }
@@ -93,11 +110,13 @@ function cancelAdmRegistration() {
 // return user array from their id
 function getUserById($id){
     global $db;
-    $query = "SELECT * FROM users WHERE id=" . $id;
-    $result = mysqli_query($db, $query);
-
-    $user = mysqli_fetch_assoc($result);
-    return $user;
+    $query = "SELECT * FROM users WHERE id='$id'";
+    if ($db->query($query) === TRUE) {
+        $result = $db->query($query);
+        return $result->fetch_assoc();
+    }else{
+        echo "Error. cannot get any data";
+    }
 }
 
 // escape string
@@ -118,14 +137,23 @@ function display_error() {
     }
 }
 
-function isLoggedIn()
+/*function isLoggedIn()
 {
     if (isset($_SESSION['user'])) {
         return true;
     }else{
         return false;
     }
-}
+}*/
+
+/*function isAdmin()
+{
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
+        return true;
+    }else{
+        return false;
+    }
+}*/
 
 // log user out if logout button clicked
 if (isset($_GET['logout'])) {
@@ -133,6 +161,9 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['user']);
     header("location: login.php");
 }
+
+
+
 
 // call the login() function if register_btn is clicked
 if (isset($_POST['login_btn'])) {
@@ -165,11 +196,26 @@ function login(){
         if (mysqli_num_rows($results) == 1) { // user found
             // check if user is admin or user
             $logged_in_user = mysqli_fetch_assoc($results);
+
+            if($logged_in_user != false AND $logged_in_user['user_type'] == 'user') {
+                $medicare_number = $logged_in_user['username'];
+
+                $query = "SELECT * FROM persons_view WHERE medicare_number = '$medicare_number'";
+                $result = $db->query($query);
+                if($result != false) {
+                    if($result->num_rows != 1) {
+                        $_SESSION['msg'] = "unauthorised access. please contact the database administrator";
+                        header('Location: login.php');
+                        exit();
+                    }
+                }
+            }
+
             if ($logged_in_user['user_type'] == 'admin') {
 
                 $_SESSION['user'] = $logged_in_user;
                 $_SESSION['success']  = "You are now logged in";
-                header('location: admin/home.php');
+                header('location: admin/admin_header.php');
             }else{
                 $_SESSION['user'] = $logged_in_user;
                 $_SESSION['success']  = "You are now logged in";
@@ -182,14 +228,7 @@ function login(){
     }
 }
 
-function isAdmin()
-{
-    if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
-        return true;
-    }else{
-        return false;
-    }
-}
+
 
 //call the followUp function if go-to-daily-form-btn button is clicked
 if(isset($_POST['go-to-daily-form-btn']))   {
@@ -226,7 +265,16 @@ function processFollowUp()
     if (!empty($_POST['check-list'])) {
         $symptoms = $_POST['check-list'];
     }
+    if(!empty($_POST['other-symptom'])) {
+        $other_symptom = e($_POST['other-symptom']);
+    }
 
+    if (empty(($current_date))){
+        array_push($errors, "current-date is required");
+    }
+    if (empty(($current_time))){
+        array_push($errors, "current-time is required");
+    }
     if (empty($body_temperature)) {
         array_push($errors, "body-temperature required");
     }
@@ -241,22 +289,39 @@ function processFollowUp()
         $result = $db->query($query);
 
         $person_id = "";
-        if ($result->num_rows > 0) {
+        if ($result->num_rows == 1) {
             while ($row = $result->fetch_assoc()) {
                 $person_id = $row["person_id"];
             }
 
-            //put data into Symptoms Table
+            //put data into FOLLOWUP DETAILS Table
+            $result;
             foreach ($symptoms as $symptom) {
-                $query = $db->prepare("INSERT INTO symptoms (person_id, date_reported, time_reported, symptom) VALUES(?, ?, ?, ?)");
-                $query->bind_param('isss', $person_id, $current_date, $current_time, $symptom);
-                $query->execute();
+                $query = "INSERT INTO followup_details (person_id, date_reported, time_reported, symptoms) VALUES ('$person_id', '$current_date', '$current_time', '$symptom')";
+                $result = $db->query($query);
+
+            }
+            if(isset($other_symptom)) {
+                //echo $other_symptom;
+                $query = "INSERT INTO followup_details (person_id, date_reported, time_reported, symptoms) VALUES ('$person_id', '$current_date', '$current_time', '$other_symptom')";
+                $result = $db->query($query);
+
+            }
+            if($result == true) {
+                echo "data-inserted into followup details table";
+            } else {
+                die("Error into inserting into followup details table");
             }
 
             //put data into Daily Follow-Up Table
-            $query = $db->prepare("INSERT INTO daily_follow_up (person_person_id, date_reported, time_reported, body_temperature) VALUES(?,?,?,?)");
-            $query->bind_param('issd', $person_id, $current_date, $current_time, $body_temperature);
-            $query->execute();
+            $query = "INSERT INTO daily_follow_up (person_id, date_reported, time_reported, body_temp) VALUES('$person_id', '$current_date', '$current_time', '$body_temperature')";
+            $result = $db->query($query);
+            if($result != false) {
+                echo "data-inserted into daily followup table";
+            } else {
+                die("Error into inserting into daily followup table");
+            }
+
 
             $db->close();
             header('Location: thankyou.php');
@@ -284,47 +349,42 @@ function displayTable($table_name){
         $data[] = $row;
     }
 
- if ( @$data!==null) {
-    @$colNames = array_keys(reset($data));
+    if ( @$data!==null) {
+        @$colNames = array_keys(reset($data));
 
-    echo "<table class=table>";
-    echo "<thead>";
+        echo "<table class=table>";
+        echo "<thead>";
 
-    foreach ($colNames as $colName) {
-        if ($colName != "pkey") {
-            if ($colName != "screenname") {
-                echo "<th>$colName</th>";
-            }
-        }
-    };
-    echo "</thead>";
-    foreach ($data as $row) {
-        echo "<tr>";
         foreach ($colNames as $colName) {
             if ($colName != "pkey") {
                 if ($colName != "screenname") {
-                    echo "<td>" . $row[$colName] . "</td>";
+                    echo "<th>$colName</th>";
                 }
-
             }
+        };
+        echo "</thead>";
+        foreach ($data as $row) {
+            echo "<tr>";
+            foreach ($colNames as $colName) {
+                if ($colName != "pkey") {
+                    if ($colName != "screenname") {
+                        echo "<td>" . $row[$colName] . "</td>";
+                    }
+
+                }
+            }
+            echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
+
+            /* try {
+                 if(array_key_exists(@$row['screenName'],$row)){
+                     echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
+                 }
+             } catch (Exception $e) {
+                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
+             }*/
+            echo "</tr>";
         }
-        echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
-
-        /* try {
-             if(array_key_exists(@$row['screenName'],$row)){
-                 echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
-             }
-         } catch (Exception $e) {
-             //echo 'Caught exception: ',  $e->getMessage(), "\n";
-         }*/
-
-
-        echo "</tr>";
     }
-}
-
-
-   
     mysqli_free_result($result);
 }
 
@@ -340,32 +400,32 @@ if(isset($_GET['person_person_id'])) {
 }
 
 function count_num_pkeys($table_name){
-    
 
-    
+
+
     global $db;
     echo 'inside get PK';
     $query = "select COUNT(*) FROM PERSON";
-  
-  $result = mysqli_query($db, $query);
-    
+
+    $result = mysqli_query($db, $query);
+
     if(!$result) {
         echo 'db failed';
     }
-  while($row = mysqli_fetch_row($result))
+    while($row = mysqli_fetch_row($result))
     {
-        
+
         foreach($row as $cell) {
             echo 'a';
             echo $cell;
         }
-        
+
     }
     mysqli_free_result($result);
-    
-    
-    //echo $result; 
-    
+
+
+    //echo $result;
+
 }
 
 function getRegions(){
@@ -398,18 +458,17 @@ function getHealthFacilities(){
 
 }
 
-    function getBulkData($QueryToRun)
-    {
-        global $db;
-        $query = $QueryToRun;
-        $result = mysqli_query($db, $query);
-        $screenData = array();
-        if (mysqli_num_rows($result) == 1) { // user found
-            $screenData = mysqli_fetch_assoc($result);
-        }
-        return $screenData;
+function getBulkData($QueryToRun)
+{
+    global $db;
+    $query = $QueryToRun;
+    $result = mysqli_query($db, $query);
+    $screenData = array();
+    if (mysqli_num_rows($result) == 1) { // user found
+        $screenData = mysqli_fetch_assoc($result);
     }
-
+    return $screenData;
+}
 
 
 function displayTableByCols($query_name,$url){
@@ -453,7 +512,7 @@ function displayTableByCols($query_name,$url){
 
             }else{
 
-                echo "<td><a href=../$url/" . @$row['screenname']  . @$row['pkey'] . ">view</a>";
+                echo "<td><a href=../$url/" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
             }
 
 
@@ -474,8 +533,5 @@ function displayTableByCols($query_name,$url){
 
     mysqli_free_result($result);
 }
-
-
-
 
 

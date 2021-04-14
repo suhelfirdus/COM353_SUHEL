@@ -8,7 +8,7 @@ $screenData=getBulkData($QueryToRun);
 <head>
     <script>
         function enableHealthFacilty() {
-            //alert(document.getElementById('is_health_worker').value)
+
 
             if(document.getElementById('is_health_worker').value=="Yes"){
                 document.getElementById('health_facility').disabled=false;
@@ -23,12 +23,11 @@ $screenData=getBulkData($QueryToRun);
     </script>
     <script>
         function setValue() {
-            //alert('hello    1'+document.getElementById('zip_id').value);
-            //alert(document.getElementById('city_id').value);
+
             document.getElementById('city_code').value=document.getElementById('city_id').value;
             document.getElementById('new_postal').value=document.getElementById('zip_id').value;
 
-           //alert(document.getElementById('new_postal').value);
+
         }
 
 
@@ -46,7 +45,7 @@ $screenData=getBulkData($QueryToRun);
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("txtHint").innerHTML = this.responseText;
-                        //alert(this.responseText);
+
                     }
                 };
 
@@ -67,7 +66,7 @@ $screenData=getBulkData($QueryToRun);
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("txtZip").innerHTML = this.responseText;
-                        //alert(this.responseText);
+
                     }
                 };
 
@@ -335,7 +334,7 @@ $screenData=getBulkData($QueryToRun);
 function update_ui_person($person_id)
 {
 
-    global $mysqli;
+    global $db;
     $_SESSION["person_id"]=$person_id;
     //$person_id = e($_POST['person_id']);
     $first_name=e($_POST['first_name']);
@@ -369,7 +368,7 @@ function update_ui_person($person_id)
     //$query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `person`.`person_id` = $person_id";
     $query = "UPDATE `person` SET `mothers_name`='$motherno',`fathers_name`='$fatherno', `citizenship`='$citizenship',`gender`='$gender', `health_facility_id`='$health_facility_id', `dob` = '$dob',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
     //echo  $query;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
 
         $successFlag='Y';
     } else {
@@ -392,19 +391,19 @@ function update_ui_person($person_id)
     $query = "UPDATE `address` SET  `city_id` = '$city_id' ,   `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
 
 
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         $successFlag='Y';
     } else {
         $successFlag='N';
     }
 
     $queryUpd ="update address set region_id=(select region_id from region where region_name='$region_name') where person_id=$person_id";
-   if ($mysqli->query($queryUpd) === TRUE) {
+   if ($db->query($queryUpd) === TRUE) {
         $successFlag='Y';
     } else {
        $successFlag='N';
     }
-    $mysqli->close();
+    $db->close();
     if ($successFlag=='Y'){
         echo "<script>alert('Person Saved Successfully')</script>";
     }else{

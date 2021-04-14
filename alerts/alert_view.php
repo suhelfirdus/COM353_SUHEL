@@ -174,7 +174,7 @@ function set_new_alert_save()
 {
 
 
-    global $mysqli;
+    global $db;
     $region_id = e($_POST['region_id']);
     $region_name = e($_POST['region_name2']);
     $current_alert = e($_POST['current_active_alert']);
@@ -195,18 +195,18 @@ function set_new_alert_save()
     $query="update alert_system set is_active='$active' where region_id='$region_id'";
     $queryinsert="insert into alert_system(region_id,alert_level_id,is_active,notify_people,email_rec_id,alert_type) values($region_id,'$change_alert_to','$newstatus','$notify_people','$email_rec','GENERAL')";
     //echo  $queryinsert;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "<b>Record updated successfully</b>";
     } else {
         echo "Error updating record: " . $query->error;
     }
 
-    if ($mysqli->query($queryinsert) === TRUE) {
+    if ($db->query($queryinsert) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     $_SESSION["region_id"]=$region_id;
     return $region_name;
 

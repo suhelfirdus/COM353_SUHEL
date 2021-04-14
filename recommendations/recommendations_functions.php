@@ -25,11 +25,11 @@ if (isset($_POST['delete_recommendations_btn'])) {
 }
 function add_new_recommendations()
 {
-    global $mysqli;
+    global $db;
     $query = "INSERT INTO recommendations(rec_id)VALUES(null)";
-    $mysqli->query($query);
-    $rec_id=$mysqli->insert_id;
-    $mysqli->close();
+    $db->query($query);
+    $rec_id=$db->insert_id;
+    $db->close();
     return  $rec_id;
 }
 
@@ -37,34 +37,34 @@ function add_new_recommendations()
 
 function update_region($rec_id)
 {
-    global $mysqli;
+    global $db;
     $rec_id = e($_POST['rec_id']);
     $rec_name = e($_POST['rec_name']);
     $rec_date = e($_POST['rec_date']);
     $rec_text = e($_POST['rec_text']);
     $query = "UPDATE `recommendations` SET `rec_name` = '$rec_name',`rec_date` = '$rec_date',`rec_text` = '$rec_text'  WHERE `recommendations`.`rec_id` = $rec_id";
     //echo  $query;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $rec_id;
 }
 
 function delete_recommendations($rec_id)
 {
-    global $mysqli;
+    global $db;
     $rec_id = e($_POST['rec_id']);
     $query ="DELETE FROM `recommendations` WHERE `rec_id` = $rec_id";
     echo $query;
-    if ($mysqli->query($query) === TRUE) {
+    if ($db->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-    $mysqli->close();
+    $db->close();
     return $rec_id;
 }
 
