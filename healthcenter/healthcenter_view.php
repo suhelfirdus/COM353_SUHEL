@@ -20,7 +20,7 @@ $screenData=getBulkData($QueryToRun);
         <div class="row">
             <div class="col-md-4">
                 <?php
-                include '../admin/admin_menu2.php';
+                include '../admin/admin_menu.php';
                 ?>
             </div>
    <!-- First Columns is always the menu ends-->
@@ -44,7 +44,7 @@ $screenData=getBulkData($QueryToRun);
                         <label for="facility_id">
                             Facility Id
                         </label>
-                        <input type="text" class="form-control" id="facility_id"  name="facility_id" value="<?php echo $screenData['facility_id']?>"/>
+                        <input type="text" class="form-control" id="facility_id"  name="facility_id" value="<?php echo $screenData['facility_id']?>" readonly/>
 
                     </div>
                     <div class="form-group">

@@ -1,5 +1,6 @@
 <?php
 include '../UICommon/template.php' ;
+include 'healthcenter_functions.php';
 
 ?>
 <body>
@@ -41,7 +42,7 @@ include '../UICommon/template.php' ;
                     SEARCH
                 </button>&NonBreakingSpace;
                 <hr>
-                <button type="submit" class="btn btn-primary" name="ADD_NEW_HEALTH_CENTER" >
+                <button type="submit" class="btn btn-primary" name="add_new_Public_health_center" >
                     ADD NEW HEALTH CENTER
                 </button>
                 <hr>
@@ -68,7 +69,7 @@ if (isset($_POST['SEARCH_HEALTHCENTER'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
     $query = "select * from publichealthcentres_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);

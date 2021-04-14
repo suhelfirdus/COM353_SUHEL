@@ -298,20 +298,6 @@ $screenData=getBulkData($QueryToRun);
 
 
         <div class="col-md-12">
-            <span class="badge badge-default">RELATED PERSONS</span>
-            <table class="table">
-
-                <?php
-                //echo "<b>Related Persons</b>";
-                $table_name = "persons_view where related_person_no='$screenData[person_id]'";
-                displayTable($table_name);
-                ?>
-
-            </table>
-        </div>
-
-
-        <div class="col-md-12">
             <span class="badge badge-default">TEST HISTORY</span>
             <table class="table">
                 <?php

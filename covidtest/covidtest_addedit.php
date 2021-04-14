@@ -73,8 +73,7 @@ $screenData=getBulkData($QueryToRun);
                         Test Performed By
                     </label>
                     <select name="tested_by" id="tested_by">
-                        <?php echo $allpersons=getRelatedPerson();
-                        ?>
+                        <?php echo $allpersons=getHealthWorker();                        ?>
 
                     </select>
                 </div>

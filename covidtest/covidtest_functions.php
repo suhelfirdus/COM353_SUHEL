@@ -49,6 +49,21 @@ if (isset($_POST['edit_covidtest_report'])) {
     return  $test_id;
 } */
 
+function getHealthWorker(){
+    global $db;
+    $query = "SELECT Person_id,first_name,Last_name,phone_number,street_address from person_det_view where is_health_worker='Yes'";
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $regions = array();
+    while ($row = $result->fetch_row()) {
+        echo  "<option value=$row[0] >$row[0] - $row[1] $row[2] </option>";
+        $regions[]=$row;
+    }
+
+    return $regions;
+
+}
+
 function getRelatedPerson(){
     global $db;
     $query = "SELECT Person_id,first_name,Last_name,phone_number,street_address from person_det_view";

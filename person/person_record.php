@@ -8,7 +8,7 @@ include '../UICommon/template.php' ;
     <div class="row">
      <div class="col-md-4">
             <?php
-            include '../admin/admin_menu2.php';
+            include '../admin/admin_menu.php';
             ?>
         </div>
 
@@ -19,7 +19,7 @@ include '../UICommon/template.php' ;
                 Add New Person
             </button>
             <?php
-            $table_name = "persons_view";
+            $table_name = "person_det_view";
             displayTable($table_name);
             ?>
         </div>

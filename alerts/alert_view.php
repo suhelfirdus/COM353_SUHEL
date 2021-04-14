@@ -202,7 +202,7 @@ function set_new_alert_save()
     }
 
     if ($mysqli->query($queryinsert) === TRUE) {
-        //echo "Record updated successfully";
+        echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }

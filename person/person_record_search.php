@@ -70,7 +70,7 @@ if (isset($_POST['SEARCH_PERSON'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
     $query = "select person_id,first_name,last_name,date_of_birth,medicare_number,phone_number,citizenship,email_address,mothers_name,fathers_name,pkey,screenname from person_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);
