@@ -84,7 +84,7 @@ if (isset($_POST['SEARCH_EMPLOYEE'])) {
 
     $query ="select * from(
 select p.health_facility_id,p.person_id,p.first_name,p.last_name,d.result_date ,d.result,d.test_id
-from person p, diagnostic d where is_health_worker='Y' and
+from person p, diagnostic d where is_health_worker='Yes' and
 p.person_id=d.person_id and d.result='Positive') a where a.health_facility_id=$healthfacilty and a.".$searchparam." like '".$searchvalue."%'";
 
 
