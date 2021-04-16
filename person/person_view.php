@@ -138,15 +138,43 @@ $screenData=getBulkData($QueryToRun);
                     <label for="fathers_name">
                         Father's Name
                     </label>
-                    <input type="text" class="form-control" id="fathers_name" name="fathers_name" value="<?php echo @$screenData['fathers_name']?>" required/>
+
+                    <select name="fathers_name" id="fathers_name" required ">
+                        <option value=<?php echo $screenData['fathers_id']?>><?php echo $screenData['fathers_name']?></option>
+                        <option value=0>Unknown</option>
+
+                    ?><?php echo $parent=getParents('Male')
+                    ?>
+
+                    </select>
+
+
                 </div>
 
                 <div class="form-group">
                     <label for="mothers_name">
                         Mother's Name
                     </label>
-                    <input type="text" class="form-control" id="fathers_name" name="mothers_name" value="<?php echo @$screenData['mothers_name']?>" required/>
+                    <select name="mothers_name" id="mothers_name" required ">
+                    <option value=<?php echo $screenData['mothers_id']?>><?php echo $screenData['mothers_name']?></option>
+                    <option value=0>Unknown</option>
+                    ?><?php echo $parent=getParents('Female')
+                    ?>
+                    </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="spouse_name">
+                        Spouse/Partner Name
+                    </label>
+                    <select name="spouse_name" id="spouse_name" required ">
+                    <option value=<?php echo $screenData['spouse_id']?>><?php echo $screenData['spouse_name']?></option>
+                    <option value=0>Unknown</option>
+                    ?><?php echo $parent=getParents('Spouse')
+                    ?>
+                    </select>
+                </div>
+
 
 
                 <div class="form-group">
@@ -172,12 +200,7 @@ $screenData=getBulkData($QueryToRun);
                         <option value="No">No</option>
                     </select>
                 </div>
-                <!--<div class="form-group">
-                        <label for="health_facility">
-                            Health Facilty
-                        </label>
-                        <input type="text" class="form-control" id="health_facility" name ="health_facility" value="<?php echo @$screenData['health_facility']?>" disabled/>
-                    </div> -->
+
 
                 <div class="form-group">
                     <label for="health_facility">
@@ -191,18 +214,6 @@ $screenData=getBulkData($QueryToRun);
                     </select>
                 </div>
 
-
-
-                <!--<div class="form-group">
-                    <label for="related_person_no">
-                        Related Person No
-                    </label>
-                    <select name="related_person_no" id="related_person_no" required>
-                        <?php echo  "<option value=$screenData[related_person_no]>$screenData[related_person_no]</option>"?>
-                        <?php echo $allpersons=getRelatedPerson();
-                        ?>
-                    </select>
-                </div> -->
 
 
                 <button type="submit" class="btn btn-primary" name="update_person_btn" >
@@ -288,7 +299,7 @@ $screenData=getBulkData($QueryToRun);
                 <label for="zone_id">
                     Group Zone
                 </label>
-                <select name="zone_id" id="zone_id"  required>
+                <select name="zone_id" id="zone_id"  >
                     <?php echo  "<option value=''>--Participating Group Zone -- </option>"?>
                     <?php echo $region=getZones();
                     ?>
@@ -307,18 +318,24 @@ $screenData=getBulkData($QueryToRun);
 
         </div>
 
-            <!--<div class="form-group">
-                <label for="province">
-                    Province
-                </label>
-                <input type="text" class="form-control" id="province" name="province" required/>
-            </div>-->
+ 
 
 
         </form>
 
 
+        <div class="col-md-12">
+            <span class="badge badge-default">360 RELATIONS</span>
+            <table class="table">
+                <?php
 
+                $table_name = "select * from relations_360view where person_id=$q";
+                $url='none';
+                displayTableByCols($table_name,$url);
+                ?>
+
+            </table>
+        </div>
 
 
 
@@ -376,6 +393,9 @@ function update_ui_person($person_id)
     //$fatherno=e($_POST['fathers_no']);
     $fatherno=(isset($_POST['fathers_name'])) ? $_POST['fathers_name'] : 0;
     $motherno=(isset($_POST['mothers_name'])) ? $_POST['mothers_name'] : 0;
+    $spouseno=(isset($_POST['spouse_name'])) ? $_POST['spouse_name'] : 0;
+
+
    // echo  $fatherno ;
    // echo  $motherno;
 
@@ -386,14 +406,15 @@ function update_ui_person($person_id)
         $health_facility_id='';
     }
     else{
-        $health_facility_id=e($_POST['health_facility']);
+        //$health_facility_id=e($_POST['health_facility']);
+        $health_facility_id=(isset($_POST['health_facility'])) ? $_POST['health_facility'] : '';
     }
 
 
 
 
     //$query = "UPDATE `person` SET `first_name` = '$first_name', `last_name` = '$last_name' ,`dob` = '$dob' ,`medicare_number` = '$medicare_no',`is_health_worker` = '$is_health_worker' ,`related_person_no` = '$related_person_no'   WHERE `person`.`person_id` = $person_id";
-    $query = "UPDATE `person` SET `mothers_name`='$motherno',`fathers_name`='$fatherno', `citizenship`='$citizenship',`gender`='$gender', `health_facility_id`='$health_facility_id', `dob` = '$dob',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
+    $query = "UPDATE `person` SET `spouse_id`='$spouseno' , `mothers_id`='$motherno',`fathers_id`='$fatherno', `citizenship`='$citizenship',`gender`='$gender', `health_facility_id`='$health_facility_id', `dob` = '$dob',`is_health_worker` = '$is_health_worker',`first_name` = '$first_name',`last_name` = '$last_name',`medicare_number` = '$medicare_no' WHERE `person`.`person_id` = $person_id";
     //echo  $query;
     if ($mysqli->query($query) === TRUE) {
 
@@ -423,7 +444,7 @@ function update_ui_person($person_id)
     } else {
         $successFlag='N';
     }
-
+    //echo"address update 2";
     $queryUpd ="update address set region_id=(select region_id from region where region_name='$region_name') where person_id=$person_id";
    if ($mysqli->query($queryUpd) === TRUE) {
         $successFlag='Y';
@@ -431,28 +452,25 @@ function update_ui_person($person_id)
        $successFlag='N';
     }
 
-    if ($successFlag=='Y'){
-        echo "<script>alert('Person Saved Successfully')</script>";
-    }else{
-        echo "<script>alert('Error Saving')</script>";
+    //echo"participating_zones update";
+    if ($group_zone!=null){
+        $queryZone = "INSERT INTO `participating_zones` (`pid`, `person_id`, `group_zone_id`) VALUES (NULL, $person_id, $group_zone)";
+        echo $queryZone;
+        if ($mysqli->query($queryZone) === TRUE) {
+            echo "";
+            $successFlag='Y';
+        } else {
+            echo "";
+            $successFlag='N';
+        }
+        $mysqli->close();
+
+
     }
-
-    $queryZone = "INSERT INTO `participating_zones` (`pid`, `person_id`, `group_zone_id`) VALUES (NULL, $person_id, $group_zone)";
-    //echo $queryZone;
-    if ($mysqli->query($queryZone) === TRUE) {
-
-        echo "";
-        $successFlag='Y';
-    } else {
-        echo "";
-        $successFlag='N';
-    }
-    $mysqli->close();
-
     if ($successFlag=='Y'){
-        echo "<script>alert('Person Saved Successfully')</script>";
+        echo "Person Saved Successfully";
     }else{
-        echo "<script>alert('Error Saving')</script>";
+        echo "'Error Saving 2'";
     }
 
 

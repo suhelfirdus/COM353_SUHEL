@@ -1,7 +1,8 @@
 <?php
 include '../UICommon/template.php' ;
 include 'healthcenter_functions.php' ;
-$q = $_GET['facility_id'];
+//$q = $_GET['facility_id'];
+$q =(isset($_GET['facility_id'])) ? $_GET['facility_id'] : $_SESSION["facility_id"];
 @$fieldSet=$_GET['Successflag'];
 $fieldEnable='enabled';
 
@@ -89,12 +90,12 @@ $screenData=getBulkData($QueryToRun);
                         </div>
 
                         <div class="form-group">
-                            <label for="operating_zone">
-                                Region Name
+                            <label for="group_zone">
+                                Zone Name
                             </label>
-                            <select name="operating_zone" id="operating_zone" >
-                                <option value='<?php echo $screenData['region_name']?>'><?php echo $screenData['operating_zone']?></option>
-                                <?php echo $region=getRegions();
+                            <select name="group_zone" id="group_zone" >
+                                <option value='<?php echo $screenData['zone_id']?>'><?php echo $screenData['operating_zone']?></option>
+                                <?php echo $zones=getZones();
                                 ?>
                             </select>
                         </div>

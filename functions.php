@@ -399,6 +399,26 @@ function getZones(){
 
 }
 
+function getParents($gender){
+    global $db;
+    if ($gender=='Spouse'){
+        $query = "select person_id ,first_name,last_name from person_det_view";
+    }else{
+        $query = "select person_id ,first_name,last_name from person_det_view where gender='$gender'";
+    }
+
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $zones = array();
+    while ($row = $result->fetch_row()) {
+        echo  "<option value='$row[0]'>$row[0]  $row[1] $row[2] </option>";
+        $regions[]=$row;
+    }
+
+    return $zones;
+
+}
+
 function getHealthFacilities(){
     global $db;
     $query = "select facility_id,facility_name from publichealthcenter";
