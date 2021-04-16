@@ -89,6 +89,7 @@
         <a href="../healthworker/healthworker_record.php">Health Workers</a>
         <a href="../regions/region_record_search.php"">Regions</a>
         <a href="../cities/cities_record_search.php">Cities</a>
+        <a href="../groupzones/groupzones_record_search.php">Group Zones</a>
         <a href="../recommendations/recommendations_record_search.php">Recommendation</a>
         <a href="../covidtest/covidtest_record_search.php">Covid Tests</a>
         <a href="../alerts/alert_record_search.php">Set Alert</a>

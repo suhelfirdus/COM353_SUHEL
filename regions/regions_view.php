@@ -48,6 +48,29 @@ $screenData = getBulkData($QueryToRun);
                             <input type="text" class="form-control" id="region_name" name="region_name"
                                    value="<?php echo $screenData['region_name'] ?>" required/>
                         </div>
+                        <div class="form-group">
+                            <label for="province_name">
+                                Province Name
+                            </label>
+                            <select name="province_name" id="province_name" >
+                                <option value='<?php echo $screenData['province']?>'><?php echo @$screenData['province_name']?></option>
+                                <option value="0"> -- Select Province -- </option>
+                                <option value="AB">Alberta</option>
+                                <option value="BC">British Columbia</option>
+                                <option value="MB">Manitoba</option>
+                                <option value="NB">New Brunswick</option>
+                                <option value="NL">Newfoundland and Labrador</option>
+                                <option value="NS">Nova Scotia</option>
+                                <option value="ON">Ontario</option>
+                                <option value="PE">Prince Edward Island</option>
+                                <option value="QC">Quebec</option>
+                                <option value="SK">Saskatchewan</option>
+                                <option value="NT">Northwest Territories</option>
+                                <option value="NU">Nunavut</option>
+                                <option value="YT">Yukon</option>
+                            </select>
+
+                        </div>
                         <button type="submit" class="btn btn-primary" name="update_newRegion_btn">
                             Save Region
                         </button>
@@ -188,4 +211,22 @@ where alerts.alert_date between '$fromdate' and '$todate';";
 </div>
 
 </body>
+<?php
+function update_region($region_id)
+{
+    global $mysqli;
+    $region_id = e($_POST['region_id']);
+    $region_name = e($_POST['region_name']);
+    $province_name =e($_POST['province_name']);
+    $query = "UPDATE `region` SET `region_name` = '$region_name', `province_name`='$province_name'  WHERE `region`.`region_id` = $region_id";
+    echo $query;
+    if ($mysqli->query($query) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $query->error;
+    }
+    $mysqli->close();
+    return $region_id;
+}
+?>
 </html>

@@ -56,29 +56,7 @@ $screenData=getBulkData($QueryToRun);
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="province_name">
-                                Province Name
-                            </label>
-                            <select name="province_name" id="province_name" >
-                                <option value='<?php echo $screenData['province']?>'><?php echo $screenData['province']?></option>
-                                <option value="0"> -- Select Province -- </option>
-                                <option value="AB">Alberta</option>
-                                <option value="BC">British Columbia</option>
-                                <option value="MB">Manitoba</option>
-                                <option value="NB">New Brunswick</option>
-                                <option value="NL">Newfoundland and Labrador</option>
-                                <option value="NS">Nova Scotia</option>
-                                <option value="ON">Ontario</option>
-                                <option value="PE">Prince Edward Island</option>
-                                <option value="QC">Quebec</option>
-                                <option value="SK">Saskatchewan</option>
-                                <option value="NT">Northwest Territories</option>
-                                <option value="NU">Nunavut</option>
-                                <option value="YT">Yukon</option>
-                            </select>
 
-                        </div>
 
                         <button type="submit" class="btn btn-primary" name="save_city" >
                             Save
@@ -161,14 +139,14 @@ $screenData=getBulkData($QueryToRun);
 function update_city($city_id)
 {
     global $mysqli;
-    print_r($_POST);
+    //print_r($_POST);
     $city_id = e($_POST['city_id']);
     $city_name = e($_POST['city_name']);
     $region_name = e($_POST['region_name']);
-    $province_name = e($_POST['province_name']);
 
 
-    $query = "UPDATE `city` SET `city_name` = '$city_name',`province`='$province_name' WHERE `city`.`city_id` = $city_id";
+
+    $query = "UPDATE `city` SET `city_name` = '$city_name'  WHERE `city`.`city_id` = $city_id";
 
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
@@ -176,13 +154,14 @@ function update_city($city_id)
         echo "Error updating record: " . $query->error;
     }
     $query = "UPDATE `city` SET `region_id` = (select region_id from region where region_name='$region_name') WHERE `city`.`city_id` = $city_id";
-    echo $query;
+    //echo $query;
     if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
+        echo " ";
     } else {
         echo "Error updating record: " . $query->error;
     }
     $mysqli->close();
+    $_SESSION["city_id"]=$city_id;
     return $city_id;
 }
 ?>

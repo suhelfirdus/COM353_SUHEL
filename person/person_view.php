@@ -31,13 +31,9 @@ $screenData=getBulkData($QueryToRun);
            //alert(document.getElementById('new_postal').value);
         }
 
-
-
-
-
         function showCities(str) {
 
-            alert(str);
+            //alert(str);
             if (str == "") {
                 document.getElementById("txtHint").innerHTML = "";
                 return;
@@ -58,7 +54,7 @@ $screenData=getBulkData($QueryToRun);
 
         function showZip(str) {
 
-            alert(str);
+            //alert(str);
             if (str == "") {
                 document.getElementById("txtZip").innerHTML = "";
                 return;
@@ -263,6 +259,9 @@ $screenData=getBulkData($QueryToRun);
             </div>
 
 
+
+
+
             <div class="form-group">
 
                 <input type="hidden" class="form-control" id="city_code" name="city_code" value="<?php echo $screenData['city_id']?>" required/>
@@ -285,13 +284,36 @@ $screenData=getBulkData($QueryToRun);
             </div>
 
 
+            <div>
+                <label for="zone_id">
+                    Group Zone
+                </label>
+                <select name="zone_id" id="zone_id"  required>
+                    <?php echo  "<option value=''>--Participating Group Zone -- </option>"?>
+                    <?php echo $region=getZones();
+                    ?>
+                </select>
+            </div>
+            <div>
+                <span class="badge badge-default">PARTICIPATING ZONES</span>
+                <table class="table">
+                    <?php
+                    $table_name = "select `group_zone_id`,`zone_name`,`participation_date` from `participating_zones_view` where `person_id`=$q";
+                    $url='none';
+                    displayTableByCols($table_name,$url);
+                    ?>
+                </table>
+            </div>
+
+        </div>
+
             <!--<div class="form-group">
                 <label for="province">
                     Province
                 </label>
                 <input type="text" class="form-control" id="province" name="province" required/>
             </div>-->
-        </div>
+
 
         </form>
 
@@ -347,6 +369,7 @@ function update_ui_person($person_id)
     $is_health_worker=e($_POST['is_health_worker']);
     //$related_person_no=e($_POST['related_person_no']);
     $medicare_no=e($_POST['medicare_number']);
+    $group_zone=e($_POST['zone_id']);
 
     $gender=e($_POST['gender']);
     $citizenship=e($_POST['citizenship']);
@@ -389,7 +412,7 @@ function update_ui_person($person_id)
     $city_id = e($_POST['city_code']);
     $postal_code = e($_POST['new_postal']);
     //$postal_code = e($_POST['zip_id']);
-    echo $postal_code;
+    //echo $postal_code;
 
     //$query = "UPDATE `address` SET `email_address` = '$email_address', `phone_number` = '$phone_number' ,`street_address` = '$street_address' ,`is_health_worker` = '$is_health_worker' ,`province` = '$province'   WHERE `address`.`person_id` = '$person_id'";
     $query = "UPDATE `address` SET  `city_id` = '$city_id' ,   `postal_code` = '$postal_code',`street_address` = '$street_address',`phone_number` = '$phone_number',`email_address` = '$email_address' where `address`.`person_id` = $person_id";
@@ -407,12 +430,31 @@ function update_ui_person($person_id)
     } else {
        $successFlag='N';
     }
-    $mysqli->close();
+
     if ($successFlag=='Y'){
         echo "<script>alert('Person Saved Successfully')</script>";
     }else{
         echo "<script>alert('Error Saving')</script>";
     }
+
+    $queryZone = "INSERT INTO `participating_zones` (`pid`, `person_id`, `group_zone_id`) VALUES (NULL, $person_id, $group_zone)";
+    //echo $queryZone;
+    if ($mysqli->query($queryZone) === TRUE) {
+
+        echo "";
+        $successFlag='Y';
+    } else {
+        echo "";
+        $successFlag='N';
+    }
+    $mysqli->close();
+
+    if ($successFlag=='Y'){
+        echo "<script>alert('Person Saved Successfully')</script>";
+    }else{
+        echo "<script>alert('Error Saving')</script>";
+    }
+
 
     return $person_id;
 }

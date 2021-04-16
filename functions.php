@@ -383,6 +383,22 @@ function getRegions(){
 
 }
 
+
+function getZones(){
+    global $db;
+    $query = "SELECT zone_id,zone_name from group_zones";
+    $result = mysqli_query($db, $query);
+    $numRows=mysqli_num_rows($result);
+    $zones = array();
+    while ($row = $result->fetch_row()) {
+        echo  "<option value='$row[0]'>$row[1]</option>";
+        $regions[]=$row;
+    }
+
+    return $zones;
+
+}
+
 function getHealthFacilities(){
     global $db;
     $query = "select facility_id,facility_name from publichealthcenter";
@@ -451,19 +467,14 @@ function displayTableByCols($query_name,$url){
             if ($url==''){
                 echo "<td><a href=" . @$row['screenname'] . "_view.php?" . @$row['pkey'] . ">view</a>";
 
-            }else{
+            }elseif($url=='none'){
 
+                echo " ";
+            }else{
                 echo "<td><a href=../$url/" . @$row['screenname']  . @$row['pkey'] . ">view</a>";
             }
 
 
-            /* try {
-                 if(array_key_exists(@$row['screenName'],$row)){
-                     echo "<td><a href=".@$row['screenName']."_view.php?".@$row['pkey'].">view</a>";
-                 }
-             } catch (Exception $e) {
-                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
-             }*/
 
 
             echo "</tr>";

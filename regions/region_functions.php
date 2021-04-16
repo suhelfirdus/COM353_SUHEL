@@ -54,22 +54,7 @@ function add_new_region()
     return  $region_id;
 }
 
-function update_region($region_id)
-{
-    global $mysqli;
-    $region_id = e($_POST['region_id']);
-    $region_name = e($_POST['region_name']);
-    $current_alert = e($_POST['current_active_alert']);
-    $query = "UPDATE `region` SET `region_name` = '$region_name'  WHERE `region`.`region_id` = $region_id";
 
-    if ($mysqli->query($query) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $query->error;
-    }
-    $mysqli->close();
-    return $region_id;
-}
 function delete_region($region_id)
 {
     global $mysqli;

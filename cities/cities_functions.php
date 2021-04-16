@@ -31,7 +31,7 @@ if (isset($_POST['save_city'])) {
 
     $city_id = e($_POST['city_id']);
     $city_id= update_city($city_id);
-    header("Location: cities_record.php");
+    //header("Location: cities_record.php");
 }
 
 if (isset($_POST['delete_city'])) {
