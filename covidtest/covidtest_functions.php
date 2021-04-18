@@ -13,7 +13,7 @@ if (isset($_POST['update_covidtest_btn'])) {
     $test_id = e($_POST['test_id']);
     echo $test_id;
     $test_id = update_ui_covidtest($test_id);
-    header("Location: covidtest_view.php?test_id=".$test_id);
+    //header("Location: covidtest_view.php?test_id=".$test_id);
 }
 
 if (isset($_POST['edit_a_report_btn'])) {

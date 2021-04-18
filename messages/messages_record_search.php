@@ -92,7 +92,7 @@ if (isset($_POST['SEARCH_MESSAGES'])) {
 
     //$query = "select * from messages where ".$searchparam." like '".$searchvalue."%'";
     //$query = "select * from messages where ".$searchparam." like '".$searchvalue."%' and datetime between '".$fromdate."%' and '".$todate."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);

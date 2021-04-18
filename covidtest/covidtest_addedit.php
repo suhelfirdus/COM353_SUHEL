@@ -1,9 +1,11 @@
 <?php
 include '../UICommon/template.php' ;
 include 'covidtest_functions.php' ;
-$q = $_GET['test_id'];
+
+$q =(isset($_GET['test_id'])) ? $_GET['test_id'] : $_SESSION["test_id"];
 //echo $q;
 $QueryToRun="SELECT * FROM diagnostic WHERE test_id=$q";
+
 //echo $QueryToRun;
 $screenData=getBulkData($QueryToRun);
 ?>
@@ -129,7 +131,7 @@ function update_ui_covidtest($test_id)
     $test_center=e($_POST['test_center']);
     $tested_by=e($_POST['tested_by']);
     //$result_date=e($_POST['result_date']);
-    echo "before";
+    //echo "before";
     $result_date=(isset($_POST['result_date'])) ? $_POST['result_date'] : '0000-00-00';
     if ($_POST['result_date']==''){
         $result_date='0000-00-00';
@@ -139,13 +141,13 @@ function update_ui_covidtest($test_id)
 
     $query = "UPDATE `diagnostic` SET `result_date`='$result_date' ,`person_id` = $person_id,`tested_by` =$tested_by,`performed_at`= '$test_center', `test_date` = '$test_date' ,`result` = '$test_result' WHERE `diagnostic`.`test_id` = $test_id";
     //$query = "UPDATE `Diagnostic` SET `person_id` = $person_id ,`test_date` = '$test_date',test_center` = '$test_center' WHERE `DIAGNOSTICS `.`test_id`=$test_id";
-    echo  $query;
+    //echo  $query;
     if ($mysqli->query($query) === TRUE) {
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . $query->error;
     }
-
+    $_SESSION["test_id"]=$test_id;
     return $test_id;
 }
 ?>

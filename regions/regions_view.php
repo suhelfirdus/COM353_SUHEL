@@ -53,7 +53,7 @@ $screenData = getBulkData($QueryToRun);
                                 Province Name
                             </label>
                             <select name="province_name" id="province_name" >
-                                <option value='<?php echo $screenData['province']?>'><?php echo @$screenData['province_name']?></option>
+                                <option value='<?php echo $screenData['province_name']?>'><?php echo @$screenData['province_name']?></option>
                                 <option value="0"> -- Select Province -- </option>
                                 <option value="AB">Alberta</option>
                                 <option value="BC">British Columbia</option>
@@ -87,7 +87,7 @@ $screenData = getBulkData($QueryToRun);
                         <hr>
 
                         <?php
-                        $query = "select pkey,screenname,city_name,province from cities_det_view where region_id=$screenData[region_id]";
+                        $query = "select pkey,screenname,city_name from cities_det_view where region_id=$screenData[region_id]";
                         //echo $query;
                         global $db;
                         $result = mysqli_query($db, $query);

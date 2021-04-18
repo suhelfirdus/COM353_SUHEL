@@ -188,8 +188,11 @@ $screenData=getBulkData($QueryToRun);
     <table class="table">
         <?php
         $patient_id = $screenData['person_id'];
-        $table_name = 'symptoms_det_table_view';
-        displaysSymptoms($table_name, $patient_id);
+        $table_name = 'select * from  symptoms_det_table_view where person_id='.$patient_id;
+        //echo $table_name;
+        $url='none';
+        displayTableByCols($table_name,$url);
+        //displaysSymptoms($table_name, $patient_id);
         ?>
     </table>
 </div>

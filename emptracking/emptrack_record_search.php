@@ -89,7 +89,7 @@ p.person_id=d.person_id and d.result='Positive') a where a.health_facility_id='$
 
 
    // $query = "select * from region_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);

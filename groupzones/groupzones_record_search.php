@@ -64,7 +64,7 @@ if (isset($_POST['SEARCH_GROUPZONES'])) {
     $searchparam=e($_POST['searchparam']);
     $searchvalue=e($_POST['searchvalue']);
     $query = "select * from group_zones_det_view where ".$searchparam." like '".$searchvalue."%'";
-    echo $query;
+    //echo $query;
     global $db;
     $result = mysqli_query($db, $query);
     $fields_num = mysqli_field_count($db);
