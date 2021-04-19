@@ -70,7 +70,9 @@ function update_facility($facility_id)
     $web_address=e($_POST['web_address']);
     $phone_number=e($_POST['phone_number']);
     $type=e($_POST['type']);
-    $operating_zone=e($_POST['group_zone']);
+    //$operating_zone=e($_POST['group_zone']);
+    $operating_zone =(isset($_GET['group_zone'])) ? $_GET['group_zone'] : 0;
+
     $method_of_acceptance=e($_POST['method_of_acceptance']);
     $has_drive_through=e($_POST['has_drive_through']);
 
