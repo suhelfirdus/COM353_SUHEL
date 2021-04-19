@@ -17,17 +17,20 @@ create table alert_system
     region_id       int                                null,
     notify_people   varchar(1)                         null,
     alert_level_id  int                                null,
+    email_rec_id    int                                null,
     constraint alert_system_pk
         unique (alert_id, region_id),
     constraint alert_system_alert_category_alert_level_id_fk
         foreign key (alert_level_id) references alert_category (alert_level_id)
 );
 
-create definer = qfc353_4@`172.16.0.0/255.240.0.0` trigger trg_notify_people
+create definer = qfc353_4@`172.16.0.0/255.240.0.0` trigger trg_email_people
     after insert
     on alert_system
     for each row
 begin
+
+
     declare pid integer default 0;
     declare emailaddress varchar(100) default '';
     declare messagebody varchar(100) default 'hi, you have a new email';
@@ -41,18 +44,18 @@ begin
     declare continue handler
         for not found set finished = 1;
 
-open cursor_allpeople;
-getemail:
+    open cursor_allpeople;
+    getemail:
     loop
         fetch cursor_allpeople into pid,emailaddress;
         if finished = 1 then
             leave getemail;
-end if;
+        end if;
         -- build email list
-insert into messages(person_id, email, old_alert_state, new_alert_state, message_body, message_category)
-values (pid, emailaddress, null, new.alert_type, messagebody, 'general');
-end loop getemail;
-close cursor_allpeople;
+        insert into messages(person_id, email, old_alert_state, new_alert_state, message_body, message_category)
+        values (pid, emailaddress, null, new.alert_level_id, new.email_rec_id, new.alert_type);
+    end loop getemail;
+    close cursor_allpeople;
 end;
 
 create table city
@@ -60,8 +63,7 @@ create table city
     city_id   int auto_increment
         primary key,
     city_name varchar(100) null,
-    region_id int          null,
-    province  varchar(100) null
+    region_id int          null
 );
 
 create table cityzipcodes
@@ -72,12 +74,12 @@ create table cityzipcodes
 
 create table daily_follow_up
 (
-    person_id     int       null,
-    date_reported date      null,
-    time_reported timestamp null,
-    body_temp     int       null,
+    person_id     int    null,
+    date_reported date   null,
+    time_reported time   null,
+    body_temp     double null,
     constraint daily_follow_up_pk
-        unique (person_id, date_reported, time_reported)
+        unique (person_id, date_reported)
 );
 
 create table diagnostic
@@ -92,14 +94,47 @@ create table diagnostic
     primary key (test_id, performed_at, tested_by)
 );
 
+create definer = qfc353_4@`172.16.0.0/255.240.0.0` trigger trg_email_report
+    after update
+    on diagnostic
+    for each row
+begin
+    declare email_id varchar(255) default 'email';
+    declare email_txt varchar(4000) default 'Hi , You have been tested Positive. Please contact PH department for further info';
+
+    IF NEW.result = 'Positive' then
+        SELECT email_address INTO email_id from address where person_id = new.person_id;
+
+        SELECT rec_text INTO email_txt FROM recommendations WHERE rec_name = 'DAY0_INITIATE_POSTIVE_RESULT_EMAIL';
+
+        insert into messages(person_id, email, old_alert_state, new_alert_state, message_body, message_category)
+        values (new.person_id, email_id, '', '', email_txt, 'PERSONAL');
+
+        SELECT rec_text INTO email_txt FROM recommendations WHERE rec_name = 'PATIENT_INFO:REQUEST_FOLLOWUP';
+
+        insert into messages(person_id, email, old_alert_state, new_alert_state, message_body, message_category)
+        values (new.person_id, email_id, '', '', email_txt, 'PERSONAL');
+
+
+    end if;
+
+end;
+
 create table followup_details
 (
     person_id     int          null,
     date_reported date         null,
-    time_reported timestamp    null,
+    time_reported time         null,
     symptoms      varchar(100) null,
     constraint daily_follow_up_pk
-        unique (person_id, date_reported, time_reported)
+        unique (person_id, date_reported, symptoms)
+);
+
+create table group_zones
+(
+    zone_id   int auto_increment
+        primary key,
+    zone_name varchar(255) null
 );
 
 create table messages
@@ -116,6 +151,15 @@ create table messages
         unique (msg_id, person_id)
 );
 
+create table participating_zones
+(
+    pid                int auto_increment
+        primary key,
+    person_id          int                                 null,
+    group_zone_id      int                                 null,
+    participation_date timestamp default CURRENT_TIMESTAMP null
+);
+
 create table person
 (
     person_id          int auto_increment
@@ -125,12 +169,12 @@ create table person
     dob                date                    null,
     medicare_number    varchar(100)            null,
     is_health_worker   varchar(3) default 'No' null,
-    related_person_no  int                     null,
     health_facility_id varchar(100)            null,
     citizenship        varchar(100)            null,
-    fathers_name       varchar(100)            null,
-    mothers_name       varchar(100)            null,
-    gender             varchar(10)             null
+    fathers_id         int        default 0    not null,
+    mothers_id         int        default 0    not null,
+    gender             varchar(10)             null,
+    spouse_id          int        default 0    null
 );
 
 create table publichealthcenter
@@ -142,9 +186,9 @@ create table publichealthcenter
     web_address          varchar(100) null,
     phone_number         decimal(20)  null,
     type                 varchar(100) null,
-    operating_zone       varchar(100) null,
     method_of_acceptance varchar(100) null,
-    has_drive_through    varchar(1)   null
+    has_drive_through    varchar(1)   null,
+    zone_id              int          null
 );
 
 create table recommendations
@@ -158,9 +202,10 @@ create table recommendations
 
 create table region
 (
-    region_id   int auto_increment
+    region_id     int auto_increment
         primary key,
-    region_name varchar(100) null
+    region_name   varchar(100) null,
+    province_name varchar(100) null
 );
 
 create table address
@@ -177,17 +222,22 @@ create table address
     constraint address_city_city_id_fk
         foreign key (city_id) references city (city_id),
     constraint address_person_person_id_fk
-        foreign key (person_id) references person (person_id),
+        foreign key (person_id) references person (person_id)
+            on delete cascade,
     constraint address_region_region_id_fk
         foreign key (region_id) references region (region_id)
 );
 
 create table users
 (
+    user_id   int auto_increment
+        primary key,
     username  varchar(40)  null,
-    email     varchar(100) null,
+    password  varchar(100) null,
     user_type varchar(10)  null,
-    password  varchar(100) null
+    email     varchar(100) null,
+    constraint users_username_uindex
+        unique (username)
 );
 
 create table work_schedule
